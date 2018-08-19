@@ -1,0 +1,1 @@
+app.tsx: initial render is server-side, rehydrated by index.tsx on client side
