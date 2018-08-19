@@ -1,8 +1,11 @@
 {
   "name": "@local/server",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "build/index.js",
+  "bin": {
+    "tiny-auth": "./bin/xpress-react-ssr"
+  },
   "scripts": {
     "start":"npm run watch & npm run bundle & nodemon ./",
     "test": "jest --env=node --ci --config=./jest.json",

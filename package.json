@@ -15,7 +15,7 @@
   "author": "",
   "license": "MIT",
   "workspaces": [
-    "packages/*"
+    "packages/server"
   ],
   "dependencies": {
     "lerna": "^3.1.1",
