@@ -1,3 +1,6 @@
+/**
+ * server-side-request ? 
+ */
 export default function () {
     const win: Window | null = typeof window !== "undefined" && window;
     const el = win.document.getElementById("root");

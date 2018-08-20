@@ -30,9 +30,9 @@ class App extends React.Component {
         <p className="App-intro">
           To get started, edit ... and save to reload.
         </p>
-        <div>
+        <div style={{ margin: "1rem", padding: "1rem", textAlign: "left" }}>
           <div>SSR: </div>
-          <pre>{JSON.stringify(req, null, 2)}</pre>
+          <pre>{JSON.stringify(req, null, 2).replace(/(\{|\}|\,|\")/gi, "")}</pre>
         </div>
       </div>
     );
