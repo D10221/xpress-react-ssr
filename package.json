@@ -15,7 +15,8 @@
   "author": "",
   "license": "MIT",
   "workspaces": [
-    "packages/xpresso"
+    "packages/xpresso",
+    "packages/xpresso-ui"
   ],
   "dependencies": {
     "lerna": "^3.1.1",

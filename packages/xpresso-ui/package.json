@@ -1,26 +1,15 @@
 {
-  "name": "@local/server",
+  "name": "@local/xpresso-ui",
   "version": "0.0.1",
   "description": "",
-  "main": "build/index.js",
-  "bin": {
-    "tiny-auth": "./bin/xpress-react-ssr"
-  },
+  "main": "static/bundle.js",
   "scripts": {
-    "start": "npm run watch & npm run bundle & bin/xpresso-dev",
-    "test": "jest --env=node --ci --config=./jest.json",
-    "build": "tsc -p .",
-    "watch": "tsc -p . --watch",
-    "clean": "rimraf ./build",
-    "rebuild": "npm run clean && npm run build",
-    "bundle": "webpack --mode=development --watch"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "devDependencies": {
-    "@types/dotenv": "^4.0.3",
-    "@types/express": "^4.16.0",
+  "devDependencies": {    
     "@types/jest": "^23.3.1",
     "@types/react": "^16.4.11",
     "@types/react-dom": "^16.0.7",
@@ -38,11 +27,8 @@
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5"
   },
-  "dependencies": {
-    "dotenv": "^6.0.0",
-    "express": "^4.16.3",
+  "dependencies": {   
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
-  },
-  "optionalDependencies": {}
+  }
 }

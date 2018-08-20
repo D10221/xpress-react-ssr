@@ -1,3 +1,4 @@
+import "./env";
 import{ Express } from "express-serve-static-core";
 import express from "express";
 import configure from "./configure";

@@ -2,7 +2,7 @@ const path = require("path");
 const publicPath = "static"
 /** */
 module.exports = {
-  entry: path.resolve(__dirname, "src/views/browser/index.tsx"),
+  entry: path.resolve(__dirname, "src/index.tsx"),
   output: {
     path: path.resolve(__dirname, publicPath),
     filename: "bundle.js"

@@ -1,14 +1,12 @@
 {
-    "lerna": "2.5.1",
-    "packages": [        
-      "packages/xpresso"     
-    ],
-    "npmClient": "yarn",
-    "useWorkspaces": true,
-    "version": "0.0.1",
-    "command": {
-       "init": {
-         "exact": true
-       }
+  "lerna": "2.5.1",
+  "packages": ["packages/xpresso", "packages/xpresso-ui"],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "0.0.1",
+  "command": {
+    "init": {
+      "exact": true
     }
   }
+}
