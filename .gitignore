@@ -26,3 +26,5 @@ scriptcs_packages/
 .yarnrc
 **/dist/*
 **/tmp/*
+**/static/**/*.js
+**/static/**/*.css

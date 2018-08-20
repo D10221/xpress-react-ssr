@@ -1,0 +1,1 @@
+NOTE browser/** is not exported, it's excluded from tsconfig.json

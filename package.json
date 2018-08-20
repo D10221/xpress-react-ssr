@@ -5,7 +5,7 @@
   "description": "minimal? express react ssr",
   "main": "index.js",
   "scripts": {
-    "start": "cd packages/server && npm start",
+    "start": "cd packages/xpresso && npm start",
     "build": "lerna --no-sort run build",
     "clean-modules": "rimraf **/node_modules/* && rm yarn.lock && yarn",
     "test": "lerna --no-sort run test",
@@ -15,7 +15,7 @@
   "author": "",
   "license": "MIT",
   "workspaces": [
-    "packages/server"
+    "packages/xpresso"
   ],
   "dependencies": {
     "lerna": "^3.1.1",
