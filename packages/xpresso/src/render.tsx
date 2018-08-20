@@ -6,11 +6,12 @@ import App from "./views/browser/app";
 /** */
 export default function render(): RequestHandler {
   /** */
-  return (_req, res, next) => {
-    try {      
+  return (req, res, next) => {
+    const { path, params, query, user } = req;
+    try {
       return res.send(
         reactDOM.renderToString(
-          <Html>
+          <Html documentTitle="xpresso" req={{ path, params, query, user }}>
             <App />
           </Html>
         )

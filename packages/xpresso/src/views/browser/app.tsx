@@ -1,22 +1,23 @@
 import * as React from 'react';
-
 /** */
 class App extends React.Component {
   state = {
     mounted: false,
-    logo: undefined as string | undefined
+    logo: undefined as string | undefined,
+    req: {}
   }
+
   componentDidMount() {
-    if (typeof window !== "undefined") {
-      require("./index.css");
-    }
+    require("./index.css");
+    const req = require("./ssr").default();
     this.setState({
       mounted: true,
-      logo: require('./logo.svg')
+      logo: require('./logo.svg'),
+      req
     });
   }
   public render() {
-    const { logo, mounted } = this.state;
+    const { logo, mounted, req } = this.state;
     if (!mounted) {
       return "... loading"
     }
@@ -29,6 +30,10 @@ class App extends React.Component {
         <p className="App-intro">
           To get started, edit ... and save to reload.
         </p>
+        <div>
+          <div>SSR: </div>
+          <pre>{JSON.stringify(req, null, 2)}</pre>
+        </div>
       </div>
     );
   }
