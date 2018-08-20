@@ -6,9 +6,7 @@ import serveFile from "./serve-file";
 /** */
 export default (app: Express) => new Promise<Express>((resolve, reject) => {
     try {
-        app.use("/public", express.static(join(__dirname, "../public")));
-        app.use("/favicon.ico", serveFile("../public/favicon.ico"));
-        app.use("/manifest.json", serveFile("../public/manifest.json"));
+        app.use("/static", express.static(join(__dirname, "../static")));     
         app.get("/", render());
         return resolve(app);
     } catch (error) {

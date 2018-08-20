@@ -28,3 +28,6 @@ scriptcs_packages/
 **/tmp/*
 **/static/**/*.js
 **/static/**/*.css
+**/static/**/*.svg
+**/static/**/*.png
+**/static/**/*.gif

@@ -1,9 +1,10 @@
 const path = require("path");
+const publicPath = "static"
 /** */
 module.exports = {
   entry: path.resolve(__dirname, "src/views/browser/index.tsx"),
   output: {
-    path: path.resolve(__dirname, "public"),
+    path: path.resolve(__dirname, publicPath),
     filename: "bundle.js"
   },
   module: {
@@ -20,7 +21,8 @@ module.exports = {
         test: /\.(png|svg|jpg|gif)$/,
         use: [{
           loader: 'file-loader', options: {
-            name: '[path][name].[ext]'
+            // name: '[path][name].[ext]',
+            publicPath
           }
         }],
       },

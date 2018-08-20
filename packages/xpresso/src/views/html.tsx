@@ -13,8 +13,8 @@ const Html: StatelessComponent = props => {
           />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
           <title>Document</title>
-          <link rel="manifest" href="/manifest.json" />
-          <link rel="shortcut icon" href="/favicon.ico" />
+          <link rel="manifest" href="static/manifest.json" />
+          <link rel="shortcut icon" href="static/favicon.ico" />
         </head>
         <body>
           <div id="root">{props.children}</div>

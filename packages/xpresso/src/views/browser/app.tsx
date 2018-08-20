@@ -1,21 +1,33 @@
 import * as React from 'react';
-let logo: any = null;
-if (typeof window !== "undefined") {
-  require("./index.css");
-  logo = require('./logo.svg');
-}
+
 /** */
 class App extends React.Component {
+  state = {
+    mounted: false,
+    logo: undefined as string | undefined
+  }
+  componentDidMount() {
+    if (typeof window !== "undefined") {
+      require("./index.css");
+    }
+    this.setState({
+      mounted: true,
+      logo: require('./logo.svg')
+    });
+  }
   public render() {
-    console.log(logo)
-    return (
+    const { logo, mounted } = this.state;
+    if (!mounted) {
+      return "... loading"
+    }
+    return mounted && (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>{module.filename}</code> and save to reload.
+          To get started, edit ... and save to reload.
         </p>
       </div>
     );
