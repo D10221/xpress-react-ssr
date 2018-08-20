@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = {
   entry: path.resolve(__dirname, "src/views/browser/index.tsx"),
   output: {
-    path: path.resolve(__dirname, "public/static"),
+    path: path.resolve(__dirname, "public"),
     filename: "bundle.js"
   },
   module: {
@@ -11,9 +11,18 @@ module.exports = {
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
-      }, {
-        test: /\.(png|jpg|gif|svg)$/i,
-        use: ['url-loader']
+      },
+      // {
+      //   test: /\.(png|jpg|gif|svg)$/i,
+      //   use: ['url-loader']
+      // },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [{
+          loader: 'file-loader', options: {
+            name: '[path][name].[ext]'
+          }
+        }],
       },
       {
         test: /\.tsx?$/,

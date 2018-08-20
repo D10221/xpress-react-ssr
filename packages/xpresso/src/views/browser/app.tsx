@@ -7,6 +7,7 @@ if (typeof window !== "undefined") {
 /** */
 class App extends React.Component {
   public render() {
+    console.log(logo)
     return (
       <div className="App">
         <header className="App-header">
