@@ -8,6 +8,7 @@ const { PUBLIC_PATH } = process.env;
 export default (app: Express) =>
   new Promise<Express>((resolve, reject) => {
     try {
+      
       if (typeof PUBLIC_PATH !== "string") {
         throw new Error("PUBLIC_PATH not set");
       }
@@ -19,6 +20,7 @@ export default (app: Express) =>
         "/static",
         express.static(publicPath)
       );
+
       app.get("/", render());
       return resolve(app);
     } catch (error) {
