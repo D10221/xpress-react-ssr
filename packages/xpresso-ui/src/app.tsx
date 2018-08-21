@@ -1,6 +1,7 @@
 import * as React from "react";
 import logo from "./logo.svg";
 import ssr from "./ssr";
+import "./index.css";
 /** */
 class App extends React.Component {
   state = {
@@ -8,16 +9,15 @@ class App extends React.Component {
     logo: undefined as string | undefined,
     req: {}
   };
-
-  async componentDidMount() {
-    require("./index.css");    
+  /** */
+  async componentDidMount() {    
     this.setState({
       mounted: true,
       logo,
       req: ssr()
     });
   }
-  
+  /** */
   public render() {
     const { logo, mounted, req } = this.state;
     if (!mounted) {
