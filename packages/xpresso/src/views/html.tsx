@@ -1,8 +1,8 @@
 import { StatelessComponent } from "react";
 import React from "react";
 /** */
-const Html: StatelessComponent<{ documentTitle: string, req: {} }> = props => {
-  const { documentTitle } = props;
+const Html: StatelessComponent<{ title: string; }> = props => {
+  const { title } = props;
   return (
     <>
       <html lang="en">
@@ -13,14 +13,11 @@ const Html: StatelessComponent<{ documentTitle: string, req: {} }> = props => {
             content="width=device-width, initial-scale=1.0"
           />
           <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-          <title>{documentTitle}</title>
+          <title>{title}</title>
           <link rel="manifest" href="static/manifest.json" />
           <link rel="shortcut icon" href="static/favicon.ico" />
         </head>
-        <body>
-          <div id="root" data-req={JSON.stringify(props.req)}>{props.children}</div>
-          <script src="static/bundle.js" />
-        </body>
+        <body>{props.children}</body>
       </html>
     </>
   );
