@@ -21,9 +21,12 @@
   "devDependencies": {
     "@types/dotenv": "^4.0.3",
     "@types/express": "^4.16.0",
+    "@types/express-jwt": "^0.0.40",
     "@types/jest": "^23.3.1",
+    "@types/jsonwebtoken": "^7.2.8",
     "@types/react": "^16.4.11",
     "@types/react-dom": "^16.0.7",
+    "@types/uuid": "^3.4.3",
     "css-loader": "^1.0.0",
     "file-loader": "^1.1.11",
     "jest": "^23.5.0",
@@ -39,10 +42,15 @@
     "webpack-dev-server": "^3.1.5"
   },
   "dependencies": {
+    "@types/minimist": "^1.2.0",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.3.0",
+    "minimist": "^1.2.0",
     "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react-dom": "^16.4.2",
+    "uuid": "^3.3.2"
   },
   "optionalDependencies": {}
 }
