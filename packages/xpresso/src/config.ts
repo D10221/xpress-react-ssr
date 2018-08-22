@@ -10,7 +10,7 @@ export const hostName = args.hostName || host || hostname();
 export const authSecret = process.env.AUTH_SECRET || ""; // fs.readFileSync('/path/to/public.pub')
 // TODO
 const _1HOUR = 60 * 60;
-export const JWT_EXP_IN_SECONDS = _1HOUR;
+export const JwtExpInSeconds = _1HOUR;
 /** TODO */
 export const secureOptions: ServerOptions = {
   cert: undefined,

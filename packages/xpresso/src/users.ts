@@ -1,26 +1,27 @@
-const admin = {
-  username: "admin",
-  password: "admin",
-  displayName: "admin"
-};
-export function getId(u?: { id?: string }): string | null {
-  return (u && u.id) || null;
+export interface User {
+  username: string,
+  password: string;
+  displayName: string;
 }
-export function find(username: string) {
-    const user = (username === admin.username && admin) || null;
-    return Promise.resolve(user);
-}
-export async function validate(username: string, password: string) {
-    const u = await find(username);
-    if(!u || u.username!== username ||  u.password !== password){
-        return null
-    }
-    return u;
-}
-const users = {
-  find,
-  validate,
-  getId
-};
+const users: User[] = [
+  {
+    username: "admin",
+    password: "admin",
+    displayName: "admin"
+  }
+]
 
-export default users;
+export function find(username: string): Promise<User|null|undefined> {
+  const { ...found } = users.find(u => u.username === username)
+  if (found) {
+    delete found.password;
+  }
+  return Promise.resolve(found);
+}
+export async function validate(username: string, password: string): Promise<User|null|undefined> {
+  return users.find(u => u.username === username && u.password === password);
+}
+export default {
+  find,
+  validate,  
+}

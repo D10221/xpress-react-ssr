@@ -1,18 +1,20 @@
 import express, { json } from "express";
 import { Express } from "express-serve-static-core";
-import Auth from "./auth";
-import { publicPath } from "./config";
+import Auth from "@local/tiny-auth";
+import { publicPath, hostName, authSecret, JwtExpInSeconds } from "./config";
 import errorHandler from "./error-handler";
 import render from "./render";
-import users from "./users";
+import users, { User } from "./users";
 import tokens from "./tokens";
 
-const auth = Auth({
-  findToken: tokens.find,
+const auth = Auth<User, keyof User>({
+  hostName,
+  secret: authSecret,
+  expInSeconds: JwtExpInSeconds,
+  isRevoked: tokens.exists,
   revokeToken: tokens.add,
   findUser: users.validate,
-  userId: users.getId,
-  ignorePaths: ["/auth/login"],
+  profileIdKey: "username",
 });
 
 /** */
