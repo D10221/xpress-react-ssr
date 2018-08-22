@@ -2,15 +2,13 @@ import * as React from "react";
 import ssr from "../ssr";
 import "./index.css";
 interface ViewState {
-  mounted: boolean;
-  req: {},
+  req: {};
   username: string;
   password: string;
 }
 /** */
 class View extends React.Component {
   state: ViewState = {
-    mounted: false,
     req: {},
     username: "",
     password: ""
@@ -18,48 +16,63 @@ class View extends React.Component {
   /** */
   async componentDidMount() {
     this.setState({
-      mounted: true,
       req: ssr()
     });
   }
-  login = () => {
-
-  }
+  login = () => {};
   /** */
   public render() {
-    const { mounted, req } = this.state;
-    if (!mounted) {
-      return "... loading";
-    }
+    const { req } = this.state;
     return (
-      mounted && (
-        <div className="view">
+      <div className="view">
+        <div className="view-content">
           <header className="view-header">
             <h1 className="view-title">Login</h1>
           </header>
-          <div className="view-content">
-            <input className="view-input" value={this.state.username} onChange={e => {
-              this.setState({
-                username: e.target.value
-              })
-            }} />
-            <input className="view-input" value={this.state.password} onChange={e => {
-              this.setState({
-                password: e.target.value
-              })
-            }} />
-            <div className="view-actions">
-              <button className="view-button" onClick={this.login}>Login</button>
-            </div>
+          <div className="view-input-box">
+            <label className="view-input-label" htmlFor="user">
+              User
+            </label>
+            <input
+              id="username"
+              className="view-input"
+              value={this.state.username}
+              onChange={e => {
+                this.setState({
+                  username: e.target.value
+                });
+              }}
+            />
           </div>
-          <div style={{ margin: "1rem", padding: "1rem", textAlign: "left" }}>
-            <div>SSR: </div>
-            <pre>
-              {JSON.stringify(req, null, 2).replace(/(\{|\}|\,|\")/gi, "")}
-            </pre>
+          <div className="view-input-box">
+            <label className="view-input-label" htmlFor="password">
+              Password
+            </label>
+            <input
+              id="password"
+              className="view-input"
+              type="password"
+              value={this.state.password}
+              onChange={e => {
+                this.setState({
+                  password: e.target.value
+                });
+              }}
+            />
+          </div>
+          <div className="view-actions">
+            <button className="view-button" onClick={this.login}>
+              Login
+            </button>
           </div>
         </div>
-      )
+        <div style={{ margin: "1rem", padding: "1rem", textAlign: "left" }}>
+          <div>SSR: </div>
+          <pre>
+            {JSON.stringify(req, null, 2).replace(/(\{|\}|\,|\")/gi, "")}
+          </pre>
+        </div>
+      </div>
     );
   }
 }
