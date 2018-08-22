@@ -1,6 +1,6 @@
 import * as React from "react";
 import logo from "./logo.svg";
-import ssr from "./ssr";
+import ssr from "../ssr";
 import "./index.css";
 /** */
 class App extends React.Component {

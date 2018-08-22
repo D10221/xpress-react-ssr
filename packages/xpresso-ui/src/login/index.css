@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  
+  .view {
+    text-align: center;
+  }
+  
+  .view-logo {
+    animation: view-logo-spin infinite 20s linear;
+    height: 80px;
+  }
+  
+  .view-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+  }
+  
+  .view-title {
+    font-size: 1.5em;
+  }
+  
+  .view-content {
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: large;
+  }
+  
+  .view-input {
+    margin: 1rem;
+  }
+  .view-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin: 1rem
+  }
+  .view-button {
+    width: 200px;
+    margin: 1rem
+  }
+  @keyframes view-logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  

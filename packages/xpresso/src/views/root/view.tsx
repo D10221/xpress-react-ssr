@@ -10,7 +10,7 @@ const Root: StatelessComponent<{ user?: any, path?: any, params?: any, query?: a
         <div id="root" data-req={JSON.stringify({ path, params, query, user })}>
             <UserMenu user={user} />
         </div>
-        <script src="static/bundle.js" />
+        <script src="static/app.js" />
     </Html>
 }
 

@@ -2,10 +2,13 @@ const path = require("path");
 const publicPath = "static"
 /** */
 module.exports = {
-  entry: path.resolve(__dirname, "src/index.tsx"),
+  entry: {
+    app: path.resolve(__dirname, "src/app/index.tsx"),
+    login: path.resolve(__dirname, "src/login/index.tsx"),
+  },
   output: {
-    path: path.resolve(__dirname, publicPath),
-    filename: "bundle.js"
+    path: path.resolve(__dirname, path.join(publicPath)),
+    filename: "[name].js"
   },
   module: {
     rules: [
@@ -21,8 +24,7 @@ module.exports = {
         test: /\.(png|svg|jpg|gif)$/,
         use: [{
           loader: 'file-loader', options: {
-            // name: '[path][name].[ext]',
-            publicPath
+             name: 'images/[name].[hash].[ext]',
           }
         }],
       },
