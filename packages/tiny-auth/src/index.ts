@@ -18,13 +18,18 @@ export class AuthError extends Error {
     super(message);
   }
 }
-export interface AnyUser  { [key: string]: any };
+export interface AnyUser { [key: string]: any };
+
+export interface Unless {
+  unless: typeof unless
+};
+
 /** */
 export default function <User extends AnyUser, UserKey extends keyof User & string>(options: {
   hostName: string,
   secret: string,
   expInSeconds: number,
-  findUser: (username: string, password: string) => Promise<User|undefined|null>;
+  findUser: (username: string, password: string) => Promise<User | undefined | null>;
   profileIdKey: UserKey;
   isRevoked: (id: string) => Promise<boolean>;
   revokeToken: (id: string) => Promise<any>;
@@ -53,36 +58,40 @@ export default function <User extends AnyUser, UserKey extends keyof User & stri
 
   const { hostName, secret, expInSeconds } = options;
   /** */
-  const middleware: RequestHandler & { unless?: typeof unless } = async (req, _res, next) => {
-    try {
-      const token = getToken(req);
-      const verified: { jti?: string, profile?: {} } | null = (() => {
-        const x = jwt.verify(token, secret, {
-          audience: hostName,
-          issuer: hostName,
-          // maxAge
-          // algorithms
-          // subject
-          // jwtid: req.user.token.id,        
-        })
-        return (typeof x === "object" && x) || null;
-      })();
-      if (!verified) {
-        return next(new AuthError("Invalid Token", 401, ":!verified", token, verified));
+
+  const middleware: RequestHandler & Unless = Object.assign(
+    async function middleware(req, _res, next) {
+      try {
+        const token = getToken(req);
+        const verified: { jti?: string, profile?: {} } | null = (() => {
+          const x = jwt.verify(token, secret, {
+            audience: hostName,
+            issuer: hostName,
+            // maxAge
+            // algorithms
+            // subject
+            // jwtid: req.user.token.id,        
+          })
+          return (typeof x === "object" && x) || null;
+        })();
+        if (!verified) {
+          return next(new AuthError("Invalid Token", 401, ":!verified", token, verified));
+        }
+        if (!verified.jti) {
+          return next(new AuthError("Invalid Token", 401, ":!jwtid", token, verified));
+        }
+        if (await isRevoked(verified.jti)) {
+          return next(new AuthError("Invalid Token", 401, ":revoked", token, verified));
+        }
+        req.user = verified.profile;
+        req.user.token = token;
+        return next();
+      } catch (error) {
+        return next(error);
       }
-      if (!verified.jti) {
-        return next(new AuthError("Invalid Token", 401, ":!jwtid", token, verified));
-      }
-      if (await isRevoked(verified.jti)) {
-        return next(new AuthError("Invalid Token", 401, ":revoked", token, verified));
-      }
-      req.user = verified.profile;
-      req.user.token = token;
-      return next();
-    } catch (error) {
-      return next(error);
-    }
-  }
+    } as RequestHandler,
+    { unless: unless }
+  )
   middleware.unless = unless;
 
   function sign(params: SignParams) {

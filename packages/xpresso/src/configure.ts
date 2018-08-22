@@ -6,6 +6,7 @@ import errorHandler from "./error-handler";
 import render from "./render";
 import users, { User } from "./users";
 import tokens from "./tokens";
+import * as root from "./views/root";
 
 const auth = Auth<User, keyof User>({
   hostName,
@@ -16,18 +17,22 @@ const auth = Auth<User, keyof User>({
   findUser: users.validate,
   profileIdKey: "username",
 });
-
 /** */
 export default (app: Express) =>
   new Promise<Express>((resolve, reject) => {
     try {
       app.use("/static", express.static(publicPath));
       app.use(json());
-      app.use(auth.middleware);
-      app.post("/auth//login", auth.loginHandler);
+      app.use(auth.middleware.unless({
+        path: ["/auth/login"]
+      }));
+
+      app.get("/auth/login", render(require("./views/login/view").default, require("./views/login/selector").default));
+      app.post("/auth/login", auth.loginHandler);
+
       app.post("/auth/logout", auth.logoutHandler);
       app.post("/auth/refresh", auth.refreshHandler);
-      app.get("/", render());
+      app.get("/", render(root.View, root.selector));
       app.use(errorHandler);
       return resolve(app);
     } catch (error) {
