@@ -16,7 +16,7 @@ export default function useWebpack(app: Express) {
   app.use(webpackDevMiddleware(compiler, {
     logLevel: 'info',
     publicPath,
-    writeToDisk: true
+    // writeToDisk: true
   }));
   app.use(
     webpackHotMiddleware(compiler, {

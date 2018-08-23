@@ -53,7 +53,7 @@ body {
 
 .view-input {
     margin: 1rem;
-    width: 250px;
+    min-width: 200px;
     font-size: 1rem;
 }
 
