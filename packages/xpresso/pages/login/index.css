@@ -41,6 +41,7 @@ body {
     flex: 1 0;
     text-align: left;
     text-transform: uppercase;  
+    min-width: 6rem;
   }
   .view-input {
     margin: 1rem;
