@@ -12,17 +12,23 @@ export default (app: Express) =>
     try {
       app.use("/static", express.static(publicPath));
       // ...
-      if (isDev) await useWebpack(app);
+      if (isDev) useWebpack(app);
       // ...
       app.use(json());
+      // ...
       app.use(auth.middleware.unless({
-        path: ["/login", "/__webpack_hmr"]
+        path: [
+          "/login", 
+          isDev && "/__webpack_hmr"
+        ]
       }));
+      // ...
       app.get("/login", renderPage("login"));
       app.post("/login", auth.loginHandler);
-
+      // ...
       app.post("/auth/logout", auth.logoutHandler);
       app.post("/auth/refresh", auth.refreshHandler);
+      // ...
       app.get("/", renderPage("app"));
       app.use(errorHandler);
       return resolve(app);

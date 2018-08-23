@@ -1,75 +1,86 @@
+:root {
+  --border-color: lightgray;
+}
+
 body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-  }
+}
   
-  .view {
+.view {
     text-align: center;
-  }
+    margin: 15% auto
+}
   
-  .view-logo {
+.view-logo {
     animation: view-logo-spin infinite 20s linear;
     height: 80px;
-  }
+}
   
-  .view-header {
+.view-header {
     display:flex;
-  }
+}
   
-  .view-title {
+.view-title {
     font-size: 1.5rem;
-  }
+}
   
-  .view-content {
+.view-content {
     margin: 1rem auto;
     padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid lightgray;
+    border: 1px solid var(--border-color);
     max-width: 350px;
-  }
-  .view-input-box {
+}
+
+.view-input-box {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-  }
-  .view-input-label {
+}
+
+.view-input-label {
     flex: 1 0;
     text-align: left;
     text-transform: uppercase;  
     min-width: 6rem;
-  }
-  .view-input {
+}
+
+.view-input {
     margin: 1rem;
     width: 250px;
     font-size: 1rem;
-  }
+}
 
-  .view-actions {
+.view-actions {
     width: 100%;
     display: flex;
     flex-direction: row;
     margin: 1rem;    
     justify-content: flex-end;
-  }
+}
 
-  .view-button {    
+.view-button {    
     margin: 1rem;
-    padding: 0.5rem;
-    min-width: 150px;   
+    padding-left: 1.5rem;    
+    padding-right: 1.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     background-color: transparent;
-    border: 1px solid lightgray;
+    border: 1px solid var(--border-color);
     cursor: pointer;        
-  }  
-  .view-button:hover {
+}  
+
+.view-button:hover {
     background-color: pink;
-  }
-  @keyframes view-logo-spin {
+}
+
+@keyframes view-logo-spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
-  }
-  
+}
