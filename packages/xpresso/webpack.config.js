@@ -1,22 +1,15 @@
 const webpack = require("webpack");
 const path = require("path");
-const publicPath = "static";
 const hotMiddlewareScript =
   "webpack-hot-middleware/client?reload=true";
-
 /** */
 module.exports = {
   mode: "development",
   context: __dirname,
   devtool: "#source-map",
-  plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  ],
   entry: {
     app: [
-      path.resolve(__dirname, "client/app/index.tsx"), 
+      path.resolve(__dirname, "client/app/index.tsx"),
       hotMiddlewareScript
     ],
     login: [
@@ -25,7 +18,8 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve(__dirname, path.join(publicPath)),
+    path: path.resolve(__dirname, "static"),
+    publicPath: "/static/",
     filename: "[name].js"
   },
   module: {
@@ -94,5 +88,10 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".jsx"]
-  }
+  },
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ],
 };

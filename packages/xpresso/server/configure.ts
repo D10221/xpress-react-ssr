@@ -9,9 +9,9 @@ const isDev = process.env.NODE_ENV !== "production";
 import useWebpack from "./use-webpack";
 /** */
 export default (app: Express) =>
-  new Promise<Express>((resolve, reject) => {
+  new Promise<Express>( async (resolve, reject) => {
     try {
-      useWebpack(app);
+      await useWebpack(app);
       app.use("/static", express.static(publicPath));
       app.use(json());
       app.use(auth.middleware.unless({

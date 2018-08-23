@@ -1,23 +1,27 @@
 import { Express } from "express-serve-static-core";
 import webpack from "webpack";
-import { join } from "path";
-const webpackConfigPath = join(__dirname, "..", "webpack.config");
-console.log("webpackConfigPath: %s", webpackConfigPath);
-const webpackConfig = require(webpackConfigPath);
-const compiler = webpack(webpackConfig);
+import webpackDevMiddleware from "webpack-dev-middleware";
+import webpackHotMiddleware from "webpack-hot-middleware";
+const compiler = webpack(require("../webpack.config"));
 
-export default function(app: Express) {
-  // Step 2: Attach the dev middleware to the compiler & the server
-  app.use(
-    require("webpack-dev-middleware")(compiler, {
-      logLevel: 'info', publicPath: webpackConfig.output.publicPath
+export default async function (app: Express) {
+  
+  console.log(`webpack.compiler.output: %s`, JSON.stringify(compiler.options.output));
+  if (!compiler.options.output) throw new Error("No Compiler Output");
+  const publicPath = compiler.options.output.publicPath;
+  if (!publicPath) { throw new Error("No Public Path") };
+
+  app.use(    webpackDevMiddleware(compiler, {
+      logLevel: 'info',
+      publicPath,
+      writeToDisk: true
     })
   );
-
-  // Step 3: Attach the hot middleware to the compiler & the server
   app.use(
-    require("webpack-hot-middleware")(compiler, {
-      log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
+    webpackHotMiddleware(compiler, {
+      log: console.log,
+      path: publicPath      
+      // heartbeat: 10 * 1000
     })
   );
 }
