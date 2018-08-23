@@ -14,7 +14,7 @@ body {
   }
   
   .view-header {
- 
+    display:flex;
   }
   
   .view-title {
