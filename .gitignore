@@ -31,3 +31,5 @@ scriptcs_packages/
 **/static/**/*.svg
 **/static/**/*.png
 **/static/**/*.gif
+*.hot-update.*
+*.map

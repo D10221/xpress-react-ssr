@@ -40,6 +40,7 @@ body {
   .view-input-label {
     flex: 1 0;
     text-align: left;
+    text-transform: uppercase;  
   }
   .view-input {
     margin: 1rem;

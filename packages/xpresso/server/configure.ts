@@ -5,10 +5,13 @@ import { publicPath } from "./config";
 import errorHandler from "./error-handler";
 import render from "./render";
 import * as App from "./views/app";
+const isDev = process.env.NODE_ENV !== "production";
+import useWebpack from "./use-webpack";
 /** */
 export default (app: Express) =>
   new Promise<Express>((resolve, reject) => {
     try {
+      useWebpack(app);
       app.use("/static", express.static(publicPath));
       app.use(json());
       app.use(auth.middleware.unless({

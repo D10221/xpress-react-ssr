@@ -1,10 +1,28 @@
+const webpack = require("webpack");
 const path = require("path");
-const publicPath = "static"
+const publicPath = "static";
+const hotMiddlewareScript =
+  "webpack-hot-middleware/client?reload=true";
+
 /** */
 module.exports = {
+  mode: "development",
+  context: __dirname,
+  devtool: "#source-map",
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ],
   entry: {
-    app: path.resolve(__dirname, "src/app/index.tsx"),
-    login: path.resolve(__dirname, "src/login/index.tsx"),
+    app: [
+      path.resolve(__dirname, "client/app/index.tsx"), 
+      hotMiddlewareScript
+    ],
+    login: [
+      path.resolve(__dirname, "client/login/index.tsx"),
+      hotMiddlewareScript
+    ]
   },
   output: {
     path: path.resolve(__dirname, path.join(publicPath)),
@@ -22,11 +40,14 @@ module.exports = {
       // },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [{
-          loader: 'file-loader', options: {
-             name: 'images/[name].[hash].[ext]',
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "images/[name].[hash].[ext]"
+            }
           }
-        }],
+        ]
       },
       {
         test: /\.tsx?$/,
