@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "lib": [
+            "dom",
+            "esnext"
+        ],
+        "jsx": "react",
+        "declaration": true,
+        "sourceMap": true,
+        "outDir": "./build",
+        "strict": true,
+        "moduleResolution": "node",
+        "baseUrl": "/",
+        "esModuleInterop": true,
+        "preserveSymlinks": true
+    },
+    "include": [
+        "./**/*.ts",
+        "./**/*.tsx"
+    ]
+}

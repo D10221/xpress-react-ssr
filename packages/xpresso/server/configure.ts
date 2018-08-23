@@ -11,13 +11,14 @@ import useWebpack from "./use-webpack";
 export default (app: Express) =>
   new Promise<Express>( async (resolve, reject) => {
     try {
-      await useWebpack(app);
       app.use("/static", express.static(publicPath));
+      // ...
+      if(isDev) await useWebpack(app);
+      // ...
       app.use(json());
       app.use(auth.middleware.unless({
-        path: ["/login"]
+        path: ["/login", "/__webpack_hmr"]
       }));
-
       app.get("/login", render(require("./views/login/view").default, require("./views/login/selector").default));
       app.post("/login", auth.loginHandler);
 
