@@ -1,4 +1,4 @@
 /**
- * Short cut
+ * Shortcut
  */
 require('./build').run();
