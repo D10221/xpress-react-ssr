@@ -7,53 +7,31 @@ import Typography from "@material-ui/core/Typography";
 import * as React from "react";
 import { Component, KeyboardEvent, SyntheticEvent } from "react";
 import styles from "./styles";
-import ssr from "../ssr";
+import { ViewState } from "./store";
+module.hot && module.hot.accept();
 /** */
 export type LoginViewProps = {
   image?: any;
 };
 /** private */
-type ViewProps = LoginViewProps & { classes: ClassNameMap };
+type ViewProps = LoginViewProps & ViewState & { classes: ClassNameMap };
 /** private */
 type LoginViewState = {
   username: string;
   password: string;
-  busy: boolean;
-  error?: string | undefined;
-  authenticated: boolean;
-  user: {};
-  route: {
-    params: {},
-    query: {},
-    path: string
-  }
 }
 /** */
 class LoginView extends Component<ViewProps> {
 
   state: LoginViewState = {
     username: "",
-    password: "",
-    busy: false,
-    error: undefined,
-    authenticated: false,
-    user: {},
-    route: {
-      params: {},
-      query: {},
-      path: ""
-    },
+    password: ""
   }
   /** */
   inputs: {
     password?: HTMLInputElement;
   } = {};
-  /** */
-  static getDerivedStateFromProps(props: ViewProps, state: LoginViewState): LoginViewState {
-    const dataSet = ssr();
-    const { user, route } = dataSet;
-    return { ...state, user, route, authenticated: !!Object.keys(user|| {}).length };
-  }
+
   /** */
   handleLogin = async (e?: SyntheticEvent<any>) => {
     e && e.preventDefault();
@@ -75,8 +53,8 @@ class LoginView extends Component<ViewProps> {
   };
   /** */
   render() {
-    const { classes, image, } = this.props;
-    const { username, busy, error, authenticated } = this.state;
+    const { classes, image, busy, error, authenticated } = this.props;
+    const { username, } = this.state;
     return (
       <div className={classes.root}>
         <Card className={classes.card}>
