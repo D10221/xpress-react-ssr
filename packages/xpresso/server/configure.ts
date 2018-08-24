@@ -2,7 +2,7 @@ import express, { json } from "express";
 import { Express } from "express-serve-static-core";
 import auth from "./auth";
 import { staticPath } from "./config";
-import errorHandler from "./error-handler";
+import ErrorHandler from "./error-handler";
 import { renderPage } from "./views";
 const isDev = process.env.NODE_ENV !== "production";
 import useWebpack from "./use-webpack";
@@ -30,7 +30,7 @@ export default (app: Express) =>
       app.post("/auth/refresh", auth.refreshHandler);
       // ...
       app.get("/", renderPage("app"));
-      app.use(errorHandler);
+      app.use(ErrorHandler());
       return resolve(app);
     } catch (error) {
       return reject(error);
