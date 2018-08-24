@@ -17,3 +17,4 @@ export async function run() {
     return process.exit(-1);
   }
 }
+run();

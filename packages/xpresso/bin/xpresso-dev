@@ -1,2 +1,2 @@
 #!/usr/bin/env nodemon
-require('../build').run();
+require('../build')

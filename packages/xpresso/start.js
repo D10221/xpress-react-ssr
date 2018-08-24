@@ -1,4 +1,4 @@
 /**
  * Shortcut
  */
-require('./build').run();
+require('./build');

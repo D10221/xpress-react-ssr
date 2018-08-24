@@ -7,13 +7,11 @@
     "tiny-auth": "./bin/xpress-react-ssr"
   },
   "scripts": {
-    "start": "npm run watch & bin/xpresso-dev",
+    "start": "NODE_ENV=production ./bin/xpresso",
     "test": "jest --env=node --ci --config=./jest.json",
-    "build": "tsc -p .",
-    "watch": "tsc -p . --watch",
-    "clean": "rimraf ./build",
-    "rebuild": "npm run clean && npm run build",
-    "bundle": "webpack --mode=development --watch"
+    "build": "tsc -p . && NODE_ENV=production webpack",
+    "clean": "rimraf ./build",    
+    "dev": "tsc -p . && NODE_ENV=development webpack && nodemon ./start"
   },
   "keywords": [],
   "author": "",
