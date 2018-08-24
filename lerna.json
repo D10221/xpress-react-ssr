@@ -1,6 +1,10 @@
 {
-  "lerna": "2.5.1",
-  "packages": ["packages/tiny-auth", "packages/xpresso", "packages/xpresso-ui"],
+  "lerna": "2.11.0",
+  "packages": [
+    "packages/tiny-auth",
+    "packages/xpresso",
+    "packages/xpresso-ui"
+  ],
   "npmClient": "yarn",
   "useWorkspaces": true,
   "version": "0.0.1",
