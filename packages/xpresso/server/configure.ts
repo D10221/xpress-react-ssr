@@ -1,7 +1,7 @@
 import express, { json } from "express";
 import { Express } from "express-serve-static-core";
 import auth from "./auth";
-import { publicPath } from "./config";
+import { staticPath } from "./config";
 import errorHandler from "./error-handler";
 import { renderPage } from "./views";
 const isDev = process.env.NODE_ENV !== "production";
@@ -12,7 +12,7 @@ export default (app: Express) =>
     try {
       if (isDev) useWebpack(app);
       // ...
-      app.use("/static", express.static(publicPath));
+      app.use("/static", express.static(staticPath));
       // ...
       app.use(json());
       // ...
