@@ -7,7 +7,7 @@ const commonConfig = require("./webpack.common.config");
  * Append hotMiddlewareScript to entries
  */
 const hotMiddlewareScript =
-    "webpack-hot-middleware/client?path=/__webpack_hmr";
+    "webpack-hot-middleware/client";
 for (const key of Object.keys(commonConfig.entry)) {
   commonConfig.entry[key] = commonConfig.entry[key].concat(hotMiddlewareScript);
 }

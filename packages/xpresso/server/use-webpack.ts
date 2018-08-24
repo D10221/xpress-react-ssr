@@ -7,9 +7,8 @@ export default function useWebpack(app: Express) {
 
   const config: webpack.Configuration = require("../webpack.config");
   const compiler = webpack(config);
-
-  if (!compiler.options.output) throw new Error("No Compiler Output");
-  const publicPath = compiler.options.output.publicPath;
+  if (!config.output) throw new Error("No Compiler Output");
+  const publicPath = config.output.publicPath;
   if (!publicPath) { throw new Error("No Public Path") };
 
   // 

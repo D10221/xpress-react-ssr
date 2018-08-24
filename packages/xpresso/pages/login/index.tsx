@@ -1,4 +1,15 @@
 import ReactDOM from "react-dom";
 import View from "./view";
 import React from "react";
-ReactDOM.hydrate(<View />, document.getElementById("root"));
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import theme from "../theme";
+
+ReactDOM.hydrate(
+    <MuiThemeProvider theme={theme}>
+        <View />
+    </MuiThemeProvider>
+    , document.getElementById("root"));
+
+if((module as any).hot){
+    ((module as any).hot.accept())    
+}

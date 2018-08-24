@@ -47,6 +47,7 @@
     "webpack-pwa-manifest": "^3.7.1"
   },
   "dependencies": {
+    "@material-ui/core": "^1.5.1",
     "@types/minimist": "^1.2.0",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",

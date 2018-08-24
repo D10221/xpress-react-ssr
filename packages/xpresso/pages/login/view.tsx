@@ -1,80 +1,124 @@
+import { Card, CardActions, CardContent, CircularProgress } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import { withStyles } from "@material-ui/core/styles";
+import { ClassNameMap } from "@material-ui/core/styles/withStyles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import * as React from "react";
+import { Component, KeyboardEvent, SyntheticEvent } from "react";
+import styles from "./styles";
 import ssr from "../ssr";
-import "./index.css";
-interface ViewState {
-  req: {};
+/** */
+export type LoginViewProps = {
+  image?: any;
+};
+/** private */
+type ViewProps = LoginViewProps & { classes: ClassNameMap };
+/** private */
+type LoginViewState = {
   username: string;
   password: string;
+  busy: boolean;
+  error?: string | undefined;
+  authenticated: boolean;
+  user: {};
+  route: {
+    params: {},
+    query: {},
+    path: string
+  }
 }
 /** */
-class View extends React.Component {
-  state: ViewState = {
-    req: {},
+class LoginView extends Component<ViewProps> {
+
+  state: LoginViewState = {
     username: "",
-    password: ""
+    password: "",
+    busy: false,
+    error: undefined,
+    authenticated: false,
+    user: {},
+    route: {
+      params: {},
+      query: {},
+      path: ""
+    },
+  }
+  /** */
+  inputs: {
+    password?: HTMLInputElement;
+  } = {};
+  /** */
+  static getDerivedStateFromProps(props: ViewProps, state: LoginViewState): LoginViewState {
+    const dataSet = ssr();
+    const { user, route } = dataSet;
+    return { ...state, user, route, authenticated: !!Object.keys(user|| {}).length };
+  }
+  /** */
+  handleLogin = async (e?: SyntheticEvent<any>) => {
+    e && e.preventDefault();
+
   };
   /** */
-  async componentDidMount() {
-    this.setState({
-      req: ssr()
-    });
-  }
-  login = () => {};
+  handleLogout = (e?: SyntheticEvent<any>) => {
+
+  };
   /** */
-  public render() {
-    const { req } = this.state;
+  onKeyUp = (key: string, callback: () => void) => (
+    e: KeyboardEvent<any>,
+  ) => {
+    if (e.key === key) callback();
+  };
+  /** */
+  onUsernameChanged: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    this.setState({ username: e.target.value })
+  };
+  /** */
+  render() {
+    const { classes, image, } = this.props;
+    const { username, busy, error, authenticated } = this.state;
     return (
-      <div className="view">
-        <div className="view-content">
-          <header className="view-header">
-            <h1 className="view-title">Login</h1>
-          </header>
-          <div className="view-input-box">
-            <label className="view-input-label" htmlFor="user">
-              User
-            </label>
-            <input
+      <div className={classes.root}>
+        <Card className={classes.card}>
+          {image && (
+            <img className={classes.media} src={image} title="Logo" />
+          )}
+          <CardContent>
+            {busy && <CircularProgress className={classes.progress} thickness={7} />}
+            {error && <Typography color="error">{error}</Typography>}
+            <TextField
               id="username"
-              className="view-input"
-              value={this.state.username}
-              onChange={e => {
-                this.setState({
-                  username: e.target.value
-                });
-              }}
+              label="User Name"
+              className={classes.textField}
+              margin="normal"
+              onKeyUp={this.onKeyUp("Enter", this.handleLogin)}
+              disabled={busy || !!authenticated}
+              value={username}
+              onChange={this.onUsernameChanged}
             />
-          </div>
-          <div className="view-input-box">
-            <label className="view-input-label" htmlFor="password">
-              Password
-            </label>
-            <input
+            <TextField style={{ visibility: (authenticated && "hidden") || undefined }}
+              inputRef={(ref: any) => (this.inputs.password = ref)}
               id="password"
-              className="view-input"
+              label="Password"
               type="password"
-              value={this.state.password}
-              onChange={e => {
-                this.setState({
-                  password: e.target.value
-                });
-              }}
+              className={classes.textField}
+              margin="normal"
+              onKeyUp={this.onKeyUp("Enter", this.handleLogin)}
+              disabled={busy || authenticated}
             />
-          </div>
-          <div className="view-actions">
-            <button className="view-button" onClick={this.login}>
-              Login
-            </button>
-          </div>
-        </div>
-        <div style={{ margin: "1rem", padding: "1rem", textAlign: "left" }}>
-          <div>SSR: </div>
-          <pre>
-            {JSON.stringify(req, null, 2).replace(/(\{|\}|\,|\")/gi, "")}
-          </pre>
-        </div>
+          </CardContent>
+          <CardActions className={classes.actions}>
+            <Button
+              onClick={authenticated ? this.handleLogout : this.handleLogin}
+              disabled={busy}
+            >
+              {authenticated ? "Logout" : "Login"}
+            </Button>
+          </CardActions>
+        </Card>
       </div>
     );
   }
 }
+export default withStyles(styles)(LoginView);
 
-export default View;
