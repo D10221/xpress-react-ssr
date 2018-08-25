@@ -3,19 +3,12 @@ import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 /** */
-export default function useWebpack(app: Express) {
-
+export function useWebpack(app: Express) {
   const config: webpack.Configuration = require("../webpack.config");
-  const compiler = webpack(config);
-  if (!config.output) throw new Error("No Compiler Output");
-  const publicPath = config.output.publicPath;
-  if (!publicPath) { throw new Error("No Public Path") };
-
-  // 
+  const compiler = webpack(config);  
   app.use(webpackDevMiddleware(compiler, {
     logLevel: 'info',
-    publicPath,
-    // writeToDisk: true
+    publicPath: process.env.PUBLIC_PATH || "/"
   }));
   app.use(
     webpackHotMiddleware(compiler, {

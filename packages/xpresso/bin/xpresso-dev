@@ -1,2 +1,2 @@
-#!/usr/bin/env nodemon
-require('../build')
+#!/usr/bin/env sh
+npx webpack && nodemon --exec "tsc -p . && node start"

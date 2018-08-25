@@ -5,23 +5,23 @@ import { staticPath } from "./config";
 import ErrorHandler from "./error-handler";
 import { renderPage } from "./views";
 const isDev = process.env.NODE_ENV !== "production";
-import useWebpack from "./use-webpack";
-/** */
+/**
+ * TODO:
+ */
 export default (app: Express) =>
   new Promise<Express>(async (resolve, reject) => {
     try {
-      if (isDev) useWebpack(app);
+      if (isDev) (await import("./use-webpack")).useWebpack(app);
       // ...
       app.use("/static", express.static(staticPath));
       // ...
       app.use(json());
       // ...
-      app.use(auth.middleware.unless({
-        path: [
-          "/login", 
-          isDev && "/__webpack_hmr"
-        ]
-      }));
+      app.use(
+        auth.middleware.unless({
+          path: ["/login", isDev && "/__webpack_hmr"]
+        })
+      );
       // ...
       app.get("/login", renderPage("login"));
       app.post("/login", auth.loginHandler);

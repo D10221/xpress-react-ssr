@@ -11,7 +11,7 @@
     "test": "jest --env=node --ci --config=./jest.json",
     "build": "tsc -p . && NODE_ENV=production webpack",
     "clean": "rimraf ./build",    
-    "dev": "tsc -p . && NODE_ENV=development webpack && nodemon ./start",
+    "dev": "webpack && nodemon --exec \"tsc -p . && node start\"",
     "webpack": "webpack"
   },
   "keywords": [],
