@@ -10,7 +10,7 @@
     "start": "NODE_ENV=production ./bin/xpresso",
     "test": "jest --env=node --ci --config=./jest.json",
     "build": "tsc -p . && NODE_ENV=production webpack",
-    "clean": "rimraf ./build",    
+    "clean": "rimraf ./build",
     "dev": "webpack && nodemon --exec \"tsc -p . && node start\"",
     "webpack": "webpack"
   },
@@ -30,6 +30,7 @@
     "@types/webpack": "^4.4.10",
     "@types/webpack-dev-middleware": "^2.0.2",
     "@types/webpack-hot-middleware": "^2.16.4",
+    "ansi-colors": "^3.0.5",
     "css-loader": "^1.0.0",
     "file-loader": "^1.1.11",
     "jest": "^23.5.0",
