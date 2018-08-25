@@ -8,7 +8,6 @@ import * as React from "react";
 import { Component, KeyboardEvent, SyntheticEvent } from "react";
 import styles from "./styles";
 import { ViewState } from "./store";
-module.hot && module.hot.accept();
 /** */
 export type LoginViewProps = {
   image?: any;

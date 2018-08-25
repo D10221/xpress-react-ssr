@@ -1,9 +1,7 @@
 import { Reducer } from "redux"
 import { FluxStandardAction } from "flux-standard-action";
 import ssr from "../ssr";
-
-module.hot && module.hot.accept();
-
+/** */
 export interface ViewState {
     token: string,
     user: {},

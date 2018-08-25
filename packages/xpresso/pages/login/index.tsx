@@ -10,9 +10,12 @@ import createStore from "../store";
 const store = createStore({ login: reducer });
 
 ReactDOM.hydrate(
-    <Provider store={store}><MuiThemeProvider theme={theme}>
-        <View />
-    </MuiThemeProvider></Provider>
-    , document.getElementById("root"));
+  <Provider store={store}>
+    <MuiThemeProvider theme={theme}>
+      <View />
+    </MuiThemeProvider>
+  </Provider>,
+  document.getElementById("root")
+);
 
-module.hot && module.hot.accept();
+process.env.NODE_ENV !== "production" && module.hot && module.hot.accept();

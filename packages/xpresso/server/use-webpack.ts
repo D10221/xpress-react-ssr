@@ -2,7 +2,7 @@ import { Express } from "express-serve-static-core";
 import webpack from "webpack";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
-
+/** */
 export default function useWebpack(app: Express) {
 
   const config: webpack.Configuration = require("../webpack.config");
