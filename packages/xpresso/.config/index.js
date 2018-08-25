@@ -4,21 +4,21 @@ const { warn } = require("./log")(console.log.bind(console));
 
 process.env.PUBLIC_PATH = process.env.PUBLIC_PATH || "/";
 /**
- * @description Webpack common configuration
+ * @description Webpack configuration
+ * @param {{ cwd: string}} 
  * @returns {Partial<import("webpack").Configuration>}
  * */
-module.exports = () => {
+module.exports = ({ cwd }) => {
+  const mode = args.mode || "development";
 
-  const cwd = process.cwd();
-  const mode = args.mode || "development";  
-  
   if (process.env.NODE_ENV === "production" && mode === "development") {
-    warn("*** \n* Warning: NODE_ENV: '%s' !== webpack.mode: '%s' \n***",
+    warn(
+      "*** \n* Warning: NODE_ENV: '%s' !== webpack.mode: '%s' \n***",
       process.env.NODE_ENV,
       mode
     );
   }
-  
+
   return {
     mode,
     context: __dirname,
