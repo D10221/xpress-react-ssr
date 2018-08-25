@@ -1,10 +1,15 @@
 const { resolve } = require("path");
 const webpack = require("webpack");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+
 /**
  * @param {{ mode: "development"|"production", cwd: string }} ;
  */
-module.exports = ({ mode, cwd }) => { 
+module.exports = ({ mode, cwd }) => {
+
+  const { outDir } = require("./compiler-options")({ mode, cwd });
+
   const plugins = [
     new WebpackPwaManifest({
       filename: "manifest.json",
@@ -21,13 +26,20 @@ module.exports = ({ mode, cwd }) => {
       display: "standalone",
       theme_color: "#000000",
       background_color: "#ffffff"
-    }),    
+    })
   ];
+
   const isDev = mode !== "production";
-  if(!isDev) return plugins ;
+  if (!isDev) {
+    return [
+      new CleanWebpackPlugin([resolve(cwd, outDir)], {
+        root: cwd
+      })
+    ].concat(plugins);
+  }
   return plugins.concat([
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin() || undefined,
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
-  ])
+  ]);
 };

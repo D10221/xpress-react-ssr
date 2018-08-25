@@ -21,7 +21,7 @@ module.exports = ({ cwd }) => {
 
   return {
     mode,
-    context: __dirname,
+    context: cwd,
     entry: require("./entry")({ mode, cwd }),
     output: require("./output")({ mode, cwd }),
     module: {
