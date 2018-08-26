@@ -18,10 +18,9 @@
     "packages/tiny-auth",
     "packages/xpresso-config",
     "packages/xpresso-middleware",
-    "packages/xpresso-pages",
     "packages/xpresso-views",
-    "packages/xpresso",
-    "packages/xpresso-ui"
+    "packages/xpresso-pages",
+    "packages/xpresso"    
   ],
   "dependencies": {
     "lerna": "2.11.0",
