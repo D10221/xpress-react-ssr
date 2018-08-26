@@ -12,7 +12,7 @@
     "preserveSymlinks": true
   },
   "include": [
-    "./server/**/*.ts",
-    "./server/**/*.tsx"
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
   ]
 }

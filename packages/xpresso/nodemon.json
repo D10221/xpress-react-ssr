@@ -4,7 +4,7 @@
   "execMap": {
     "js": "tsc -p . && node start"
   },
-  "watch": ["server/"],
+  "watch": ["src/"],
   "env": {
     "NODE_ENV": "development"
   },
