@@ -5,7 +5,7 @@ const { warn } = require("./log")(console.log.bind(console));
 process.env.PUBLIC_PATH = process.env.PUBLIC_PATH || "/";
 /**
  * @description Webpack configuration
- * @param {{ cwd: string}} 
+ * @param {{ cwd: string}}
  * @returns {Partial<import("webpack").Configuration>}
  * */
 module.exports = ({ cwd }) => {
@@ -30,6 +30,17 @@ module.exports = ({ cwd }) => {
     plugins: require("./plugins")({ mode, cwd }),
     resolve: {
       extensions: [".tsx", ".ts", ".js", ".jsx"]
+    },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendors",
+            chunks: "all"
+          }
+        }
+      }
     }
   };
 };
