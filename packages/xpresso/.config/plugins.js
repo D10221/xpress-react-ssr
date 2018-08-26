@@ -28,6 +28,7 @@ module.exports = ({ mode, cwd }) => {
       background_color: "#ffffff"
     })
   ];
+  var ManifestPlugin = require('webpack-manifest-plugin');
 
   const isDev = mode !== "production";
   if (!isDev) {
@@ -35,6 +36,12 @@ module.exports = ({ mode, cwd }) => {
       // new CleanWebpackPlugin([resolve(cwd, outDir)], {
       //   root: cwd
       // })
+      new ManifestPlugin({
+        fileName: "webpack-manifest.json",
+        filter: (x)=> {
+          return !/\.d.ts$/.test(x.path);
+        }
+      })
     ].concat(plugins);
   }
   return plugins.concat([

@@ -1,8 +1,7 @@
 const minimist = require("minimist");
 const args = minimist(process.argv.slice(2));
 const { warn } = require("./log")(console.log.bind(console));
-
-process.env.PUBLIC_PATH = process.env.PUBLIC_PATH || "/";
+//process.env.PUBLIC_PATH = process.env.PUBLIC_PATH || "/";
 /**
  * @description Webpack configuration
  * @param {{ cwd: string}}
