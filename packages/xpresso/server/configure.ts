@@ -13,7 +13,7 @@ export default (app: Express) =>
   new Promise<Express>(async (resolve, reject) => {
     try {
       if (isDev)
-        (await import("@local/handbag/middleware")).default(
+        (await import("@local/xpresso-middleware")).default(
           app,
           join(__dirname, "..", "webpack.config")
         );

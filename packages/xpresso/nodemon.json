@@ -1,6 +1,9 @@
 {
   "ignore": ["pages", "node_modules/**/node_modules"],
   "verbose": true,
+  "execMap": {
+    "js": "tsc -p . && node start"
+  },
   "watch": ["server/"],
   "env": {
     "NODE_ENV": "development"

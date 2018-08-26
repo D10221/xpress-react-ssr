@@ -15,8 +15,10 @@
   "author": "",
   "license": "MIT",
   "workspaces": [
-    "packages/handbag",
     "packages/tiny-auth",
+    "packages/xpresso-config",
+    "packages/xpresso-middleware",
+    "packages/xpresso-pages",
     "packages/xpresso",
     "packages/xpresso-ui"
   ],
