@@ -19,6 +19,7 @@
     "packages/xpresso-config",
     "packages/xpresso-middleware",
     "packages/xpresso-pages",
+    "packages/xpresso-views",
     "packages/xpresso",
     "packages/xpresso-ui"
   ],
