@@ -9,9 +9,9 @@
   "scripts": {
     "start": "NODE_ENV=production ./bin/xpresso",
     "test": "jest --env=node --ci --config=./jest.json",
-    "build": "tsc -p . && NODE_ENV=production webpack",
+    "build": "rimraf ./dist && tsc -p ./tsconfig.production.json && NODE_ENV=production webpack --mode=production",
     "clean": "rimraf ./build",
-    "dev": "webpack && nodemon --exec \"tsc -p . && node start\"",
+    "dev": "bin/expresso-dev",
     "webpack": "webpack"
   },
   "keywords": [],

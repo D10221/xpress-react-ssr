@@ -32,9 +32,9 @@ module.exports = ({ mode, cwd }) => {
   const isDev = mode !== "production";
   if (!isDev) {
     return [
-      new CleanWebpackPlugin([resolve(cwd, outDir)], {
-        root: cwd
-      })
+      // new CleanWebpackPlugin([resolve(cwd, outDir)], {
+      //   root: cwd
+      // })
     ].concat(plugins);
   }
   return plugins.concat([
