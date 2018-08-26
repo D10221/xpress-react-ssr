@@ -56,3 +56,5 @@ export const reducer: Reducer = (state: ViewState = defaultState, action) => {
 }
 
 export const selector = (state: { [key: string]: any }) => state[STORE_KEY] as ViewState;
+// no parent ? 
+(module as any).hot && (module as any).hot.accept();
