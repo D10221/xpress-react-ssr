@@ -17,16 +17,14 @@ export interface PageProps {
     route: Route;
     header?(props: { user?: User, route: Route }): ReactNode;
 };
-
-const isDev = process.env.NODE_ENV !== "production";
-
+/** */
 const Page: StatelessComponent<PageProps> = (props) => {
     const { user, route, children, page } = props;
     return <Html title="xpresso" >
         {props.header && props.header({ user, route })}
         <div id="root" data-req={JSON.stringify({ route, user })}>
             {children}
-            {!isDev && <script src={`/static/vendors.js`} />}
+            {<script src={`/static/vendors.js`} />}
             <script src={`/static/${page}.js`} />
         </div>
     </Html>
