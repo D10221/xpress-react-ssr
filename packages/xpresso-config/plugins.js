@@ -1,13 +1,12 @@
 const { resolve } = require("path");
 const webpack = require("webpack");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
+var ManifestPlugin = require('webpack-manifest-plugin');
 
 /**
  * @param {{ mode: "development"|"production", cwd: string }} ;
  */
 module.exports = ({ mode, cwd }) => {
-
-  const { outDir } = require("./compiler-options")({ mode, cwd });
 
   const plugins = [
     new WebpackPwaManifest({
@@ -27,7 +26,6 @@ module.exports = ({ mode, cwd }) => {
       background_color: "#ffffff"
     })
   ];
-  var ManifestPlugin = require('webpack-manifest-plugin');
 
   const isDev = mode !== "production";
   if (!isDev) {
