@@ -17,5 +17,4 @@ export const secureOptions: ServerOptions = {
   passphrase: undefined
   // ...
 };
-export const publicPath = process.env.PUBLIC_PATH || "/";
 export const staticPath = join(__dirname, "static");

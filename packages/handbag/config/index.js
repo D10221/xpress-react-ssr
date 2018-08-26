@@ -3,10 +3,10 @@ const args = minimist(process.argv.slice(2));
 const { warn } = require("./log")(console.log.bind(console));
 /**
  * @description Webpack configuration
- * @param {{ cwd: string}}
+ * @param {{ cwd: string, pages: {[ key: string]: string}}}
  * @returns {Partial<import("webpack").Configuration>}
  * */
-module.exports = ({ cwd }) => {
+module.exports = ({ cwd, pages }) => {
   const mode = args.mode || "development";
 
   if (process.env.NODE_ENV === "production" && mode === "development") {
@@ -20,7 +20,7 @@ module.exports = ({ cwd }) => {
   return {
     mode,
     context: cwd,
-    entry: require("./entry")({ mode, cwd }),
+    entry: require("./entry")({ mode, cwd, pages }),
     output: require("./output")({ mode, cwd }),
     module: {
       rules: require("./rules")({ mode, cwd })

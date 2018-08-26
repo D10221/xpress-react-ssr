@@ -1,7 +1,6 @@
 const { resolve } = require("path");
 const webpack = require("webpack");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 /**
  * @param {{ mode: "development"|"production", cwd: string }} ;

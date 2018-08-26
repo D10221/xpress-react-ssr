@@ -16,11 +16,7 @@ module.exports = ({ mode, cwd }) => {
     {
       test: /\.css$/,
       use: ["style-loader", "css-loader"]
-    },
-    // {
-    //   test: /\.(png|jpg|gif|svg)$/i,
-    //   use: ['url-loader']
-    // },
+    },    
     {
       test: /\.(png|svg|jpg|gif)$/,
       use: [

@@ -1,6 +1,10 @@
 /**
  * @type {import("webpack").Configuration}
  */
-module.exports = require("./.config")({ 
-    cwd: __dirname 
+module.exports = require("@local/handbag/config")({
+  cwd: __dirname,
+  pages: {
+    app: "pages/app/index.tsx",
+    login: "pages/login/index.tsx"
+  }
 });

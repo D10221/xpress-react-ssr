@@ -17,5 +17,5 @@ ReactDOM.hydrate(
   </Provider>,
   document.getElementById("root")
 );
-
-process.env.NODE_ENV !== "production" && module.hot && module.hot.accept();
+/** */
+(module as any).hot && (module as any).hot.accept();
