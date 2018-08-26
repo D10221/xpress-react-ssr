@@ -52,6 +52,17 @@ const config = {
   ],
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".jsx"]
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendors",
+          chunks: "all"
+        }
+      }
+    }
   }
 };
 module.exports = config;

@@ -1,4 +1,21 @@
 import ReactDOM from "react-dom";
-import App from "./app";
+import View from "./connected";
 import React from "react";
-ReactDOM.hydrate(<App />, document.getElementById("root"));
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import theme from "../theme";
+import { Provider } from "react-redux";
+import { reducer, STORE_KEY } from "./store";
+import createStore from "../store";
+
+const store = createStore({ [STORE_KEY]: reducer });
+
+ReactDOM.hydrate(
+  <Provider store={store}>
+    <MuiThemeProvider theme={theme}>
+      <View />
+    </MuiThemeProvider>
+  </Provider>,
+  document.getElementById("root")
+);
+/** */
+(module as any).hot && (module as any).hot.accept();
