@@ -1,18 +1,40 @@
 const { resolve, join } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { compilerOptions } = require("./tsconfig.json");
+const args = require("minimist")(process.argv.slice(2));
+/**
+ * @type {import("webpack").Entry}
+ */
+const entry = {
+  app: resolve(__dirname, "app/index.tsx"),
+  login: resolve(__dirname, "login/index.tsx")
+};
+
+/**
+ * @param {string} viewName
+ * @returns {[ Function, {}]}
+ */
+const filter = viewName => [
+  (out, key) => {
+    if (viewName === key) {
+      out[key] = entry[key];
+    }
+    return out;
+  },
+  {}
+];
+
+const keys = Object.keys(entry);
 /**
  * @type {import("webpack").Configuration}
  */
 const config = {
   mode: "development",
   context: __dirname,
-  entry: {
-    app: resolve(__dirname, "app/index.tsx")
-  },
+  entry: !args.view ? entry : keys.reduce(...filter(args.view)),
   output: {
     path: join(__dirname, "build", "public"),
-    filename: "static/app.js"
+    filename: "static/[name].js"
   },
   module: {
     rules: [
