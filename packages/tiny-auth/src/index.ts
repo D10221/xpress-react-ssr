@@ -13,11 +13,13 @@ export interface SignParams {
   secret: string,
   extra?: {}
 };
+
 export class AuthError extends Error {
   constructor(message: string, public code = 401, public reason: string = "Auth Error", public token = "", public payload: any = {}) {
     super(message);
   }
 }
+
 export interface AnyUser { [key: string]: any };
 
 export interface Unless {
@@ -34,6 +36,7 @@ export default function <User extends AnyUser, UserKey extends keyof User & stri
   isRevoked: (id: string) => Promise<boolean>;
   revokeToken: (id: string) => Promise<any>;
 }) {
+  const jwtTokenCookieKey = "jwt-token";
 
   function getRequestCredentials(req: Request) {
     let { username, password } = req.body;
@@ -44,12 +47,17 @@ export default function <User extends AnyUser, UserKey extends keyof User & stri
   }
 
   function getToken(req: Request) {
+    const cookie = req.cookies && req.cookies[jwtTokenCookieKey]
+    if (!!cookie) {
+      return cookie;
+    }
     if (
-      req.headers.authorization &&
+      typeof req.headers.authorization === "string" &&
       req.headers.authorization.split(" ")[0] === "Bearer"
     ) {
       return req.headers.authorization.split(" ")[1];
-    } else if (req.query && req.query.token) {
+    }
+    if (req.query && req.query.token) {
       return req.query.token;
     }
     return null;
@@ -63,6 +71,9 @@ export default function <User extends AnyUser, UserKey extends keyof User & stri
     async function middleware(req, _res, next) {
       try {
         const token = getToken(req);
+        if (!token) {
+          return next(new AuthError("Invalid Token", 401, ":!not-found", token, {}));
+        }
         const verified: { jti?: string, profile?: {} } | null = (() => {
           const x = jwt.verify(token, secret, {
             audience: hostName,
@@ -138,19 +149,37 @@ export default function <User extends AnyUser, UserKey extends keyof User & stri
 
   const loginHandler: RequestHandler = async (req, res, next) => {
     try {
-      const [username, password] = getRequestCredentials(req);
+      const [username, password, ref] = getRequestCredentials(req);
       const user = await findUser(username, password);
       if (!user) return next(new AuthError("invalid credentials"));
       const token = sign(signParamsFromUser(user, {}));
+      res.cookie(jwtTokenCookieKey, token, {
+        httpOnly: true
+      })
+      if (typeof ref === "string") {
+        return res.redirect(ref);
+      }
       return res.json({ token });
     } catch (error) {
       return next(error);
     }
   };
 
+  async function tryRevokeToken(token: string) {
+    if (token) {
+      const { exp, jti } = jwt.decode(token) as any;
+      //todo: seconds vs milliseconds?;
+      if (Date.now() > exp && jti) {
+        await revokeToken(jti);
+      }
+    }
+    return;
+  }
+
   const logoutHandler: RequestHandler = async (req, res, next) => {
     try {
-      await revokeToken(req.user.token.jti);
+      await tryRevokeToken(getToken(req));
+      res.cookie(jwtTokenCookieKey, "");
       return res.send("ok");
     } catch (error) {
       return next(error);
@@ -159,11 +188,11 @@ export default function <User extends AnyUser, UserKey extends keyof User & stri
 
   const refreshHandler: RequestHandler = async (req, res, next) => {
     try {
-      await revokeToken(req.user.token.jti);
+      const token = getToken(req);
+      await tryRevokeToken(token);
       const subject = req.user[profileIdKey] || "";
-
       const verified: { exp?: any } | string = jwt.verify(
-        req.user.token,
+        token,
         secret,
         {
           issuer: hostName,
@@ -174,10 +203,10 @@ export default function <User extends AnyUser, UserKey extends keyof User & stri
 
       if (typeof verified !== "object") return next(new Error("Bad Token"));
 
-      const { exp, ...token } = verified;
+      const { exp, ...rest } = verified;
       return res.json({
         token: {
-          ...token,
+          ...rest,
           exp: Math.floor(Date.now() / 1000) + expInSeconds
         }
       });
