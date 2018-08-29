@@ -9,7 +9,7 @@ import {
 /** */
 const promiseMiddleware = require("redux-promise").default as Middleware;
 /** */
-export default function(reducers: {}) {
+export default function(reducers: {}, middleware: Middleware[] = []) {
   const actionContext = {};
   /**
    * dev-tools
@@ -31,7 +31,8 @@ export default function(reducers: {}) {
     }),
     composeEnhancers(applyMiddleware(
       thunk.withExtraArgument(actionContext),
-      promiseMiddleware
+      promiseMiddleware,
+      ...middleware
     ) as any)
   );
 

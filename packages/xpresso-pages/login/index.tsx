@@ -4,10 +4,10 @@ import React from "react";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import theme from "../theme";
 import { Provider } from "react-redux";
-import { reducer, STORE_KEY } from "./store";
+import { reducer, STORE_KEY, middleware } from "./store";
 import createStore from "../store";
 
-const store = createStore({ [STORE_KEY]: reducer });
+const store = createStore({ [STORE_KEY]: reducer }, [ middleware ]);
 
 ReactDOM.hydrate(
   <Provider store={store}>

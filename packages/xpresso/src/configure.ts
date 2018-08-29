@@ -1,6 +1,6 @@
 import { renderPage } from "@local/xpresso-views";
 import express, { json } from "express";
-import { Express } from "express-serve-static-core";
+import { Express, RequestHandler } from "express-serve-static-core";
 import { join } from "path";
 import auth from "./auth";
 import ErrorHandler from "./error-handler";
@@ -19,19 +19,22 @@ export default (app: Express) =>
       // ...
       app.use("/", express.static(join(__dirname, "public")));
       // ...
-      app.use(json());
-      // Auth
-      app.use(
-        auth.middleware.unless({
-          path: ["/login", isDev && "/__webpack_hmr"]
-        })
-      );
-      app.post("/login", auth.loginHandler);
-      app.post("/auth/logout", auth.logoutHandler);
-      app.post("/auth/refresh", auth.refreshHandler);
-      // Pages
-      app.get("/login", renderPage("login"));
-      app.get("/", renderPage("app"));
+      app.all("/login", [
+        json(),
+        ((req, res, next) => {
+          console.log(req.method);
+          if (req.method === "POST") {
+            return auth.loginHandler(req, res, next);
+          }
+          if (req.method === "GET") {
+            return renderPage("login")(req, res, next);
+          }
+          return next(new Error(`${req.method} /login Not Implemented`));
+        }) as RequestHandler
+      ]);
+      app.all("/logout", [json(), auth.middleware, auth.logoutHandler]);
+      app.post("/auth/refresh", [auth.middleware, auth.refreshHandler]);
+      app.get("/", [auth.middleware, renderPage("app")]);
 
       app.use(ErrorHandler());
       return resolve(app);

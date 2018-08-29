@@ -2,7 +2,7 @@
   "ignore": ["pages", "node_modules/**/node_modules"],
   "verbose": true,
   "execMap": {
-    "js": "tsc -p . && node start"
+    "js": "ts-node start"
   },
   "watch": ["src/"],
   "env": {

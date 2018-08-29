@@ -1,5 +1,8 @@
 import View from "./view";
-import { selector } from "./store";
+import { selector, bindActions } from "./store";
 import { connect } from "react-redux";
-const Connected = connect(selector)(View);
-export default Connected ;
+const Connected = connect(
+  selector,
+  bindActions
+)(View);
+export default Connected;
