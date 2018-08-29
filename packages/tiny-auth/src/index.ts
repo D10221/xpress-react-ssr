@@ -153,7 +153,7 @@ export default function <User extends AnyUser, UserKey extends keyof User & stri
       const user = await findUser(username, password);
       if (!user) return next(new AuthError("invalid credentials"));
       const token = sign(signParamsFromUser(user, {}));
-      res.cookie(jwtTokenCookieKey, token, {
+      res.cookie && res.cookie(jwtTokenCookieKey, token, {
         httpOnly: true
       })
       if (typeof ref === "string") {
