@@ -11,7 +11,7 @@
     "test": "jest --env=node --ci --config=./jest.json",
     "build": "rimraf ./dist && tsc -p ./tsconfig.production.json && NODE_ENV=production webpack --mode=production",
     "clean": "rimraf ./build",
-    "dev": "bin/xpresso-dev",
+    "dev": "nodemon",
     "webpack": "webpack"
   },
   "keywords": [],

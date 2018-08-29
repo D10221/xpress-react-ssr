@@ -6,7 +6,7 @@ import { Express } from "express-serve-static-core";
 import { join } from "path";
 import auth from "./auth";
 import { redirectOnAuthError } from "@local/tiny-auth";
-import ErrorHandler from "./error-handler";
+import PlainErrorHandler from "./plain-error-handler";
 const isDev = process.env.NODE_ENV !== "production";
 /**
  * TODO:
@@ -23,33 +23,33 @@ export default (app: Express) =>
       // ...
       app.use("/", express.static(join(__dirname, "public")));
       // ...
-      app.get("/login", [
-        renderPage("login"),
-        redirectOnAuthError("/login")
-      ]);
+      app.get("/login", renderPage("login"));
       app.post("/login", [
         json(),
-        auth.loginHandler
+        auth.loginHandler,
+        PlainErrorHandler()
       ]);
-      app.all("/logout", [
-        json(),
-        auth.middleware,
-        auth.logoutHandler,
+      app.get("/logout", [
+        renderPage("logout"),
         //  can't rediretc to login
         // redirect to /, it will redirect to ?login
         redirectOnAuthError("/")
+      ])
+      app.post("/logout", [
+        json(),
+        auth.middleware,
+        auth.logoutHandler
       ]);
-
       app.post("/auth/refresh", [
         auth.middleware,
         auth.refreshHandler,
+        PlainErrorHandler()
       ]);
       app.get("/", [
         auth.middleware,
         renderPage("app"),
         redirectOnAuthError("/login")
       ]);
-      app.use(ErrorHandler())
       return resolve(app);
     } catch (error) {
       return reject(error);

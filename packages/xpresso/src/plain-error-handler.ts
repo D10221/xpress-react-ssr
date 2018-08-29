@@ -2,10 +2,9 @@ import { ErrorRequestHandler, Request } from "express-serve-static-core";
 /** */
 export type IsApiCall = (req: Request) => boolean;
 /** */
-export default function ErrorHandler(): ErrorRequestHandler {
+export default function PlainErrorHandler(): ErrorRequestHandler {
   /** */
-  return function errorHandler(error, req, res, _next) {
-    console.log("handling error: %s", error.toString())  
+  return function errorHandler(error, _req, res, _next) {    
     const status = error && Number((error as any).code || (error as any).status);
     return res
       .status(status || 500)
