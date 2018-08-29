@@ -2,7 +2,7 @@
   "ignore": ["pages", "node_modules/**/node_modules"],
   "verbose": true,
   "execMap": {
-    "js": "ts-node start"
+    "js": "node --inspect-brk -r ts-node/register src/index.ts"
   },
   "watch": ["src/"],
   "env": {

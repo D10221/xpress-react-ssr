@@ -14,6 +14,7 @@ export interface ViewState {
   busy: false;
   error: undefined;
   authenticated: false;
+  success: boolean;
 }
 
 const dataSet = ssr();
@@ -25,7 +26,8 @@ const defaultState: ViewState = {
   route,
   busy: false,
   error: undefined,
-  authenticated: false
+  authenticated: false,
+  success: false
 };
 
 export const STORE_KEY = "login";
@@ -37,11 +39,10 @@ export const actionTypes = {
   SET_SUCCESS: `${STORE_KEY}/set-success`,
   /** */
   FETCHING: `${STORE_KEY}/fetching`,
-  SUCCESS: `${STORE_KEY}/success`,
+  ON_SUCCESS: `${STORE_KEY}/success`,
   FAIL: `${STORE_KEY}/fail`,
   /** midleware-actio-type */
-  LOGIN: `${STORE_KEY}/login`,
-  LOGOUT: `${STORE_KEY}/logout`
+  LOGIN: `${STORE_KEY}/login`
 };
 
 export const actions = {
@@ -74,8 +75,8 @@ export const actions = {
     payload,
     meta: undefined
   }),
-  success: (payload: string): FluxStandardAction<string> => ({
-    type: actionTypes.SUCCESS,
+  onSuccess: (payload: string): FluxStandardAction<string> => ({
+    type: actionTypes.ON_SUCCESS,
     payload,
     meta: undefined
   }),
@@ -95,8 +96,7 @@ export const actions = {
       password
     },
     meta: undefined
-  }),
-  logout: () => ({})
+  })
 };
 
 export const reducer: Reducer = (state: ViewState = defaultState, action) => {
@@ -154,7 +154,7 @@ export const reducer: Reducer = (state: ViewState = defaultState, action) => {
         busy: !!busy
       };
     }
-    case actionTypes.SUCCESS: {
+    case actionTypes.ON_SUCCESS: {
       const { payload } = action as FluxStandardAction<string>;
       localStorage.setItem("token", payload || "");
       return {
@@ -192,16 +192,12 @@ export const middleware: Middleware = store => next => async action => {
             }
           }
           const { token } = await response.json();
-          return store.dispatch(actions.success(token));
+          return store.dispatch(actions.onSuccess(token));
         } catch (error) {
           return store.dispatch(actions.fail(error));
         } finally {
           store.dispatch(actions.setBusy(false));
         }
-      }
-      case actionTypes.LOGOUT: {
-        try {
-        } catch (error) {}
       }
       default:
         return next(action);

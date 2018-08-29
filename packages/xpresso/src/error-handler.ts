@@ -1,28 +1,14 @@
-import { ErrorRequestHandler, Request } from "express";
-import { AuthError } from "@local/tiny-auth";
-import { JsonWebTokenError } from "jsonwebtoken";
-/** */
-function isApi(req: Request) {
-  return /^\/api\/.*/.test(req.path);
-}
+import { ErrorRequestHandler, Request } from "express-serve-static-core";
 /** */
 export type IsApiCall = (req: Request) => boolean;
 /** */
-export default function ErrorHandler(
-  isApiCall: IsApiCall = isApi
-): ErrorRequestHandler {
+export default function ErrorHandler(): ErrorRequestHandler {
   /** */
-  return function errorHandler(error, req, res) {
-    if (!isApiCall(req)) {
-      if (error instanceof AuthError) {
-        return res.redirect("/login");
-      }
-      if (error instanceof JsonWebTokenError) {
-        return res.redirect("/login");
-      }
-    }
+  return function errorHandler(error, req, res, _next) {
+    console.log("handling error: %s", error.toString())  
+    const status = error && Number((error as any).code || (error as any).status);
     return res
-      .status(Number((error as any).code) || (error as any).status || 500)
+      .status(status || 500)
       .send(error && error.message ? error.message : error.toString());
   };
 }

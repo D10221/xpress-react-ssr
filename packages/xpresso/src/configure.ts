@@ -1,8 +1,11 @@
 import { renderPage } from "@local/xpresso-views";
-import express, { json } from "express";
-import { Express, RequestHandler } from "express-serve-static-core";
+import { json } from "body-parser";
+import cookieParser from "cookie-parser";
+import express from "express";
+import { Express } from "express-serve-static-core";
 import { join } from "path";
 import auth from "./auth";
+import { redirectOnAuthError } from "@local/tiny-auth";
 import ErrorHandler from "./error-handler";
 const isDev = process.env.NODE_ENV !== "production";
 /**
@@ -16,27 +19,37 @@ export default (app: Express) =>
           app,
           join(__dirname, "..", "webpack.config")
         );
+      app.use(cookieParser());
       // ...
       app.use("/", express.static(join(__dirname, "public")));
       // ...
-      app.all("/login", [
-        json(),
-        ((req, res, next) => {
-          console.log(req.method);
-          if (req.method === "POST") {
-            return auth.loginHandler(req, res, next);
-          }
-          if (req.method === "GET") {
-            return renderPage("login")(req, res, next);
-          }
-          return next(new Error(`${req.method} /login Not Implemented`));
-        }) as RequestHandler
+      app.get("/login", [
+        renderPage("login"),
+        redirectOnAuthError("/login")
       ]);
-      app.all("/logout", [json(), auth.middleware, auth.logoutHandler]);
-      app.post("/auth/refresh", [auth.middleware, auth.refreshHandler]);
-      app.get("/", [auth.middleware, renderPage("app")]);
+      app.post("/login", [
+        json(),
+        auth.loginHandler
+      ]);
+      app.all("/logout", [
+        json(),
+        auth.middleware,
+        auth.logoutHandler,
+        //  can't rediretc to login
+        // redirect to /, it will redirect to ?login
+        redirectOnAuthError("/")
+      ]);
 
-      app.use(ErrorHandler());
+      app.post("/auth/refresh", [
+        auth.middleware,
+        auth.refreshHandler,
+      ]);
+      app.get("/", [
+        auth.middleware,
+        renderPage("app"),
+        redirectOnAuthError("/login")
+      ]);
+      app.use(ErrorHandler())
       return resolve(app);
     } catch (error) {
       return reject(error);

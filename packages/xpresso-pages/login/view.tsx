@@ -23,37 +23,55 @@ type ViewProps = LoginViewProps &
 type LoginViewState = {
   username: string;
   password: string;
+  referer: string;
 };
 /** */
 class LoginView extends Component<ViewProps> {
   state: LoginViewState = {
     username: "",
-    password: ""
+    password: "",
+    referer: "",
   };
+  /** */
+  componentDidMount() {
+    const searchParams: URLSearchParams = new URLSearchParams(window.location.search);
+    this.setState({ referer: searchParams.get("ref") });
+  }
   /** */
   handleLogin: React.EventHandler<any> = async () => {
-    const { username, password } = this.state;
-    await this.props.login(username, password);
-    console.log("success?");
-  };
+    try {
+      const { username, password } = this.state;
+      await this.props.login(username, password);
+      if (!!this.props.success) {
+        const a: HTMLAnchorElement = document.createElement("a");
+        a.href = this.state.referer || "/";
+        a.click();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
   /** */
-  handleLogout: React.EventHandler<any> = () => {};
+  handleLogout: React.EventHandler<any> = () => {
+    // ...
+  }
   /** */
   onKeyUp = (
     key: string,
     callback: ((e: any) => void) | React.EventHandler<any>
   ) => (e: KeyboardEvent<any>) => {
-    if (e.key === key) callback(e);
-  };
+    if (e.key === key) { callback(e); }
+  }
   /** */
   onUsernameChanged: React.ChangeEventHandler<HTMLInputElement> = e => {
     this.setState({ username: e.target.value });
-  };
+  }
   onPasswordChanged: React.ChangeEventHandler<HTMLInputElement> = e => {
     this.setState({
       password: e.target.value
     });
-  };
+  }
   /** */
   render() {
     const { classes, image, busy, error, authenticated } = this.props;
@@ -88,8 +106,11 @@ class LoginView extends Component<ViewProps> {
               value={this.state.password}
               onChange={this.onPasswordChanged}
               disabled={busy || authenticated}
-            />           
-            <pre>{JSON.stringify(this.props, null, 2)}</pre>
+            />
+            <pre>{JSON.stringify({
+              ...this.props,
+              ...this.state,
+            }, null, 2)}</pre>
           </CardContent>
           <CardActions className={classes.actions}>
             <Button

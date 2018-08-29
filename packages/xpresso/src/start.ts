@@ -24,7 +24,7 @@ export default (app: Express) =>
         if (error) return reject(error);
         let address = server.address();
         address = typeof address === "string" ? address : address.address;
-        console.log("Express listening on %s:%s", address, port);
+        console.log("Express listening on %s:%s, pid: %s", address, port, process.pid);
         return resolve(app);
       });
     } catch (error) {
