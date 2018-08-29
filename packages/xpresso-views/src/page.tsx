@@ -7,22 +7,21 @@ export interface Route {
   query: {};
 }
 
-export interface User {}
-
 export interface PageProps {
+  title: string,
   page: string;
   route: Route;
-  header?(props: { user?: User; route: Route }): ReactNode;
+  header?: ReactNode;
 }
 
 const publicPath = process.env.PUBLIC_PATH || "";
 
 /** */
 const Page: StatelessComponent<PageProps> = props => {
-  const { route, children, page } = props;
+  const { route, children, page, title } = props;
   return (
-    <Html title="xpresso">
-      {props.header && props.header({  route })}
+    <Html title={title}>
+      {props.header}
       <div id="root" data-req={JSON.stringify({ route })}>
         {children}
         {<script src={[publicPath, "static", "vendors.js"].join("/")} />}

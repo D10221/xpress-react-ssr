@@ -23,14 +23,14 @@ export default (app: Express) =>
       // ...
       app.use("/", express.static(join(__dirname, "public")));
       // ...
-      app.get("/login", renderPage("login"));
+      app.get("/login", renderPage("login", req => ({ title: "Login", header: null })));
       app.post("/login", [
         json(),
         auth.loginHandler,
         PlainErrorHandler()
       ]);
       app.get("/logout", [
-        renderPage("logout"),
+        renderPage("logout", req => ({ title: "Logout", header: null })),
         //  can't rediretc to login
         // redirect to /, it will redirect to ?login
         redirectOnAuthError("/")
@@ -38,7 +38,8 @@ export default (app: Express) =>
       app.post("/logout", [
         json(),
         auth.middleware,
-        auth.logoutHandler
+        auth.logoutHandler,
+        PlainErrorHandler()
       ]);
       app.post("/auth/refresh", [
         auth.middleware,
@@ -47,7 +48,7 @@ export default (app: Express) =>
       ]);
       app.get("/", [
         auth.middleware,
-        renderPage("app"),
+        renderPage("app", req => ({ title: "App", header: null })),
         redirectOnAuthError("/login")
       ]);
       return resolve(app);
