@@ -1,6 +1,6 @@
 import users, { User } from "./users";
 import tokens from "./tokens";
-import Auth from "@local/tiny-auth";
+import { Auth } from "@local/tiny-auth";
 import args from "./args";
 import { hostname } from "os";
 const authSecret = process.env.AUTH_SECRET || ""; // fs.readFileSync('/path/to/public.pub')
@@ -15,7 +15,7 @@ const auth = Auth<User, keyof User>({
   isRevoked: tokens.exists,
   revokeToken: tokens.add,
   findUser: users.validate,
-  profileIdKey: "username",
+  profileIdKey: "username"
 });
 
 export default auth;

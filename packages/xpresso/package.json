@@ -9,10 +9,10 @@
   "scripts": {
     "start": "NODE_ENV=production ./bin/xpresso",
     "test": "jest --env=node --ci --config=./jest.json",
-    "build": "rimraf ./dist && tsc -p ./tsconfig.production.json && NODE_ENV=production webpack --mode=production",
-    "clean": "rimraf ./build",
-    "dev": "nodemon",
-    "webpack": "webpack"
+    "build": "tsc -p ./tsconfig.production.json && NODE_ENV=production webpack --mode=production",
+    "clean": "rimraf ./dist",
+    "rebuild": "yarn clean && yarn build",
+    "dev": "rimraf build && webpack && nodemon"    
   },
   "keywords": [],
   "author": "",
@@ -39,20 +39,12 @@
     "webpack-cli": "^3.1.0"
   },
   "dependencies": {
-    "@material-ui/core": "^1.5.1",
     "cookie-parser": "^1.4.3",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-jwt": "^5.3.1",
     "jsonwebtoken": "^8.3.0",
-    "minimist": "^1.2.0",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
-    "redux-promise": "^0.6.0",
-    "redux-thunk": "^2.3.0",
-    "uuid": "^3.3.2"
+    "minimist": "^1.2.0"
   },
   "optionalDependencies": {}
 }
