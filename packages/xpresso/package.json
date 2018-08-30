@@ -4,15 +4,15 @@
   "description": "",
   "main": "build/index.js",
   "bin": {
-    "tiny-auth": "./bin/xpress-react-ssr"
+    "tiny-auth": "./bin/xpresso"
   },
   "scripts": {
-    "start": "NODE_ENV=production ./bin/xpresso",
+    "start": "./bin/xpresso",
     "test": "jest --env=node --ci --config=./jest.json",
-    "build": "tsc -p ./tsconfig.production.json && NODE_ENV=production webpack --mode=production",
+    "build": "tsc -p ./tsconfig.production.json && webpack --mode=production",
     "clean": "rimraf ./dist",
     "rebuild": "yarn clean && yarn build",
-    "dev": "rimraf build && webpack && nodemon"    
+    "dev": "rimraf build && nodemon"    
   },
   "keywords": [],
   "author": "",

@@ -7,7 +7,7 @@ const args = require("minimist")(process.argv.slice(2));
  */
 const entry = {
   app: resolve(__dirname, "app/index.tsx"),
-  login: resolve(__dirname, "login/index.tsx")
+  login: resolve(__dirname, "login/index.tsx"),
 };
 
 /**
