@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",  
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -36,7 +36,8 @@
     "webpack-manifest-plugin": "^2.0.3",
     "webpack-pwa-manifest": "^3.7.1",
     "dotenv": "^6.0.0",
-    "express": "^4.16.3",        
-    "minimist": "^1.2.0"    
+    "express": "^4.16.3",
+    "minimist": "^1.2.0",
+    "nodemon": "^1.18.3"
   }
 }

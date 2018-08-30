@@ -14,8 +14,7 @@ const Html: StatelessComponent<{ title: string }> = props => {
         <link
           rel="manifest"
           href={[publicPath, "manifest.json"].join("/")}
-        />
-       
+        />       
       </head>
       <body>{props.children}</body>
     </html>

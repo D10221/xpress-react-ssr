@@ -1,7 +1,7 @@
 const { resolve } = require("path");
 const webpack = require("webpack");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
-var ManifestPlugin = require('webpack-manifest-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 /**
  * @param {{ mode: "development"|"production", cwd: string }} ;

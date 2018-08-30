@@ -1,0 +1,16 @@
+{
+  "ignore": [
+    "pages", "node_modules/**/node_modules"
+  ],
+  "verbose": true,
+  "execMap": {
+    "js": "node --inspect -r ts-node/register src/index.ts"
+  },
+  "watch": [
+    "src/"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "ts,tsx"
+}
