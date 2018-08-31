@@ -16,11 +16,9 @@
   "license": "MIT",
   "workspaces": [
     "packages/tiny-auth",
-    "packages/xpresso-config",
+    "packages/tiny-log",
     "packages/xpresso-middleware",
-    "packages/xpresso-views",
-    "packages/xpresso-pages",
-    "packages/xpresso",
+    "packages/xpresso-pages",    
     "packages/nexprezo"
   ],
   "dependencies": {

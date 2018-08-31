@@ -1,6 +1,7 @@
 const colors = require("ansi-colors");
 /**
  * @param { typeof console.log } log;
+ * @returns {{ info: typeof console.log, err: typeof console.log, warn: typeof console.log}}
  */
 module.exports = log => ({
   info(message, ...args) {
