@@ -73,9 +73,13 @@ const config = {
                         loader: "ts-loader",
                         /**@type {import("ts-loader").Options} */
                         options: {
+                            /**@type {import("typescript").CompilerOptions} */
                             compilerOptions: {
                                 ...compilerOptions,
-                                target: "es5"
+                                target: "es5",
+                                typeRoots: [
+                                    "pages/*.d.ts"
+                                ]
                             }
                         }
                     }
