@@ -1,7 +1,7 @@
 import React from "react";
 import { hydrate } from "react-dom";
 import Page from "./page";
-import WhenMounted from "../../components/when-mounted";
+import WhenMounted from "../components/when-mounted";
 if (typeof document !== "undefined") {
     hydrate(<WhenMounted><Page /></WhenMounted>, document.getElementById("root"));
 }

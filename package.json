@@ -15,10 +15,12 @@
   "author": "",
   "license": "MIT",
   "workspaces": [
-    "packages/tiny-auth",
     "packages/tiny-log",
-    "packages/xpresso-middleware",
-    "packages/xpresso-pages",    
+    "packages/tiny-auth",
+    "packages/tiny-auth-redux",
+    "packages/tiny-store",
+    "packages/dev-middleware",
+    "packages/pages",    
     "packages/nexprezo"
   ],
   "dependencies": {

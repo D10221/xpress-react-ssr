@@ -8,7 +8,7 @@ import { json } from "body-parser";
 import PlainErrorHandler from "./plain-error.handler";
 /** */
 export default async function configure(app: Express) {
-  const useWebpack = (await import("@local/xpresso-middleware")).default;
+  const useWebpack = (await import("@local/dev-middleware")).default;
   useWebpack(app, join(__dirname, "..", "webpack.config"), {
     devMiddlewareOptions: {}
   });
@@ -28,14 +28,14 @@ export default async function configure(app: Express) {
     render("admin"),
     redirectOnAuthError("/login")
   ]);
-  /** Api */
-  app.post("/api/auth/login", [json(), auth.loginHandler, PlainErrorHandler()]);
-  app.post("/api/auth/logout", [
+  app.post("/login", [json(), auth.loginHandler, PlainErrorHandler()]);
+  app.post("/logout", [
     json(),
     auth.middleware,
     auth.logoutHandler,
     PlainErrorHandler()
   ]);
+  /** Api */
   app.post("/api/auth/refresh", [
     auth.middleware,
     auth.refreshHandler,
