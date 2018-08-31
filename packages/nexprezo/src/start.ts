@@ -25,7 +25,7 @@ export default (app: Express) =>
       server.listen(port, host, (error: Error) => {
         if (error) return reject(error);
         console.log(
-          "%s listening on %s:%s, pid: %s",
+          "%s listening on %s, pid: %s",
           pkg.name,
           address(server.address()),
           process.pid
