@@ -1,16 +1,26 @@
 import { render } from "react-dom";
 import React from "react";
-import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import createStore from "@local/tiny-store";
+import { Router, Route, Switch, Link } from "react-router-dom";
 import Home from "../home/page";
 import Login from "../login/page";
 import Logout from "../logout/page";
-const store = createStore({}, []);
-render(<Provider store={store}>
-    <Router>
-        <Route path="/home" exact Component={Home} />
-        <Route path="/login" exact Component={Login} />
-        <Route path="/logout" exact Component={Logout} />
+import { createBrowserHistory } from "history";
+const history = createBrowserHistory();
+render(
+    <Router history={history}>
+        <Switch>
+            <Route path="/home" component={Home} />
+            <Route path="/login" Component={Login} />
+            <Route path="/logout" Component={Logout} />
+            <Route path="*" render={() => {
+                return (<div >
+                    <nav>
+                        <Link to="/home">Home</Link>
+                        <Link to="/login">Login</Link>
+                        <Link to="/logout">Logout</Link>
+                    </nav>
+                </div >);
+            }} />
+        </Switch>
     </Router>
-</Provider>, document.getElementById("root"));
+    , document.getElementById("root"));
