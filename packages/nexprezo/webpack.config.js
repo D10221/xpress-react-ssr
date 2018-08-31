@@ -27,10 +27,22 @@ const config = {
     mode,
     context: __dirname,
     entry: {
+        "admin": [
+            resolve(__dirname, "src", "pages", "admin", "index.tsx"),
+            isDev && hotMiddlewareScript
+        ].filter(x => !!x),
         "home": [
             resolve(__dirname, "src", "pages", "home", "index.tsx"),
             isDev && hotMiddlewareScript
-        ].filter(x => !!x)
+        ].filter(x => !!x),
+        "login": [
+            resolve(__dirname, "src", "pages", "login", "index.tsx"),
+            isDev && hotMiddlewareScript
+        ].filter(x => !!x),
+        "logout": [
+            resolve(__dirname, "src", "pages", "logout", "index.tsx"),
+            isDev && hotMiddlewareScript
+        ].filter(x => !!x),
     },
     output: {
         publicPath: process.env.PUBLIC_PATH,

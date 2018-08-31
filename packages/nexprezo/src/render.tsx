@@ -8,8 +8,8 @@ export default (page: string): RequestHandler => {
     /** */
     return (req, res, next) => {
         const title = "React App";
-        const Page = ReactDOM.renderToString(require(join(__dirname, "pages", page)).default);
         try {
+            const Page = ReactDOM.renderToString(require(join(__dirname, "pages", page)).default);
             res.send(
                 ReactDOM.renderToString(<html lang="en">
                     <head>
@@ -25,8 +25,8 @@ export default (page: string): RequestHandler => {
                     </head>
                     <body>
                         <div id="root" >{Page}</div>
-                        <script defer src={`${[PUBLIC_PATH || "", "vendors"].join("/")}.js`} />
-                        <script defer src={`${[PUBLIC_PATH || "", page].join("/")}.js`} />
+                        <script defer src={`${[PUBLIC_PATH, "vendors"].join("/")}.js`} />
+                        <script defer src={`${[PUBLIC_PATH, page].join("/")}.js`} />
                     </body>
                 </html>)
             )

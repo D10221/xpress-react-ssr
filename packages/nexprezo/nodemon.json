@@ -1,6 +1,6 @@
 {
   "ignore": [
-    "pages", "node_modules/**/node_modules"
+    "src/pages", "node_modules/**/node_modules"
   ],
   "verbose": true,
   "execMap": {

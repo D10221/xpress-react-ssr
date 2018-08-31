@@ -6,7 +6,7 @@ import {
   Middleware,
   compose
 } from "redux";
-/** Don't import redux-promise @types */
+/** Don't import redux-promise @types it breaks Dispatch */
 const promiseMiddleware = require("redux-promise").default as Middleware;
 /** */
 export default function(reducers: {}, middleware: Middleware[] = []) {

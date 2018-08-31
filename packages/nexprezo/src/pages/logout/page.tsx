@@ -16,7 +16,7 @@ export default class Home extends Component {
     if (!mounted) return null;
     return (
       <div>
-        <h1>Home Page</h1>
+        <h1>Logout Page</h1>
       </div>
     );
   }

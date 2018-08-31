@@ -15,15 +15,15 @@ export default async function useWebpack(app: Express): Promise<Express> {
         app.use(
             webpackDevMiddleware(compiler, {
                 logLevel: "info",
-                publicPath: PUBLIC_PATH || "/"
+                publicPath: PUBLIC_PATH || ""
             })
         );
 
         app.use(
             webpackHotMiddleware(compiler, {
                 reload: true,
-                log: console.log
-                // heartbeat: 10 * 1000
+                log: console.log,
+                heartbeat: 10 * 1000
             })
         );
 
