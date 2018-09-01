@@ -1,0 +1,13 @@
+#! /usr/bin/env node
+const args = require("minimist")(process.argv.slice(2));
+let level = "info";
+if(args.e || args.err){
+    level = "err";
+}
+if(args.w || args.warn){
+    level = "err";
+}
+const devOnly = (!!args.devOnly) || (!!args["dev-only"]);
+const logger = require("../log")(console.log.bind(console), { devOnly });
+if(logger.disabled) console.log("DISABLED!");
+logger[level](...args._);
