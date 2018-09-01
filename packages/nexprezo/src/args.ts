@@ -1,3 +1,3 @@
-import mimist from "minimist";
-const args = mimist(process.argv.slice(2));;
+import minimist from "minimist";
+const args = minimist(process.argv.slice(2));
 export default args;

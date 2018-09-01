@@ -8,7 +8,8 @@
     "nexprezo": "bin/nexprezo"
   },
   "scripts": {
-    "build": "rimraf dist && tsc -p tsconfig.prod.json && webpack --mode=production",
+    "build-pages": "yarn workspaces @local/pages build",
+    "build": "rimraf dist && tsc -p tsconfig.prod.json && webpack --mode=production && yarn build-pages",
     "test": "jest --env=node --ci --config=./jest.json",
     "dev": "nodemon --delay 1000ms",
     "start": "node start"

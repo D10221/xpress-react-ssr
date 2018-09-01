@@ -3,10 +3,12 @@
   "private": true,
   "version": "1.0.0",
   "description": "./pages",
-  "main": "/dev/index.tsx",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc -p ./tsconfig.prod.json"
   },
   "keywords": [],
   "author": "",

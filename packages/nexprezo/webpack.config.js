@@ -4,10 +4,14 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const args = require("minimist")(process.argv.slice(2));
+const env = require("dotenv");
+const { dirname } = require("path");
+const { readFileSync } = require("fs");
+const logger = require("@local/tiny-log").default(console.log.bind(console));
 /** */
 if (typeof args.mode === "string") {
   if (process.env.NODE_ENV !== args.mode) {
-    console.log("Override MODE: %s", args.mode);
+    logger.warn("Override MODE: %s", args.mode);
     process.env.NODE_ENV = args.mode;
   }
 }
@@ -15,13 +19,23 @@ if (typeof args.mode === "string") {
 const isDev = process.env.NODE_ENV !== "production";
 /** */
 const mode = (isDev && "development") || "production";
-console.log("webpack mode: %s", mode);
+logger.info("webpack mode: %s", mode);
 /** */
 const cwd = __dirname;
 /** */
 const hotMiddlewareScript = "webpack-hot-middleware/client";
-const context = resolve(cwd, "..", "pages");
-/** */
+/**
+ * PAGES is a Module Name
+ */
+const { PAGES } = env.parse(readFileSync(resolve(process.cwd(), ".env")));
+/**
+ * Point sub-repo from package name
+ */
+const context = dirname(require.resolve(PAGES));
+logger.info("PAGES -> context: %s", context)
+/**
+ * let PAGES package "choose" tsconfig
+ */
 const { compilerOptions } = require(join(
   context,
   `./tsconfig${!isDev ? ".prod" : ""}.json`
@@ -30,6 +44,8 @@ const { outDir } = compilerOptions;
 /**
  *  @param page {string}
  *  @return {string}
+ *
+ *  server loads page from default export , webpack bundles "index"
  */
 function _resolve(page) {
   return [context, page, "index.tsx"].join("/");
@@ -78,7 +94,7 @@ const config = {
               /**@type {import("typescript").CompilerOptions} */
               compilerOptions: {
                 ...compilerOptions,
-                target: "es5",
+                target: "es5"
                 // typeRoots: ["pages/*.d.ts"]
               }
             }

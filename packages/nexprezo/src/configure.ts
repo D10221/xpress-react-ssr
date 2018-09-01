@@ -8,10 +8,12 @@ import { json } from "body-parser";
 import PlainErrorHandler from "./plain-error.handler";
 /** */
 export default async function configure(app: Express) {
-  const useWebpack = (await import("@local/dev-middleware")).default;
-  useWebpack(app, join(__dirname, "..", "webpack.config"), {
-    devMiddlewareOptions: {}
-  });
+  if (process.env.NODE_ENV !== "production") {
+    const useWebpack = (await import("@local/dev-middleware")).default;
+    useWebpack(app, join(__dirname, "..", "webpack.config"), {
+      devMiddlewareOptions: {}
+    });
+  }
   app.use(cookieParser());
   /* Static */
   app.use("/", serverStatic(join(__dirname, "public")));

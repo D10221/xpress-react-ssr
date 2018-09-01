@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/server";
 import { RequestHandler } from "express-serve-static-core";
-import { join } from "path";
+import resolvePage from "./resolve-page";
 
 const { PUBLIC_PATH } = process.env;
 export default (page: string): RequestHandler => {
@@ -9,7 +9,7 @@ export default (page: string): RequestHandler => {
     return (req, res, next) => {
         const title = "React App";
         try {
-            const Page = ReactDOM.renderToString(require(["@local/pages", page].join("/")).default);
+            const Page = resolvePage(page);
             res.send(
                 ReactDOM.renderToString(<html lang="en">
                     <head>
