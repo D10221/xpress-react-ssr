@@ -9,7 +9,7 @@ export default (page: string): RequestHandler => {
     return (req, res, next) => {
         const title = "React App";
         try {
-            const Page = ReactDOM.renderToString(require(join(__dirname, "pages", page)).default);
+            const Page = ReactDOM.renderToString(require(["@local/pages", page].join("/")).default);
             res.send(
                 ReactDOM.renderToString(<html lang="en">
                     <head>

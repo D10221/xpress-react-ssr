@@ -2,11 +2,18 @@ const { resolve, join } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { compilerOptions } = require("./tsconfig.json");
 const args = require("minimist")(process.argv.slice(2));
+/** @type {import("@local/tiny-log")} */
+const Log = require("@local/tiny-log").default;
+const log = Log(console.log.bind(console));
 /**
  * @type {import("webpack").Entry}
  */
-const entry = {
-  dev: resolve(__dirname, "dev/index.tsx")  
+const entry = {  
+  admin: resolve(__dirname, "admin/index.tsx"),
+  dev: resolve(__dirname, "dev/index.tsx"),
+  home: resolve(__dirname, "home/index.tsx"),
+  login: resolve(__dirname, "login/index.tsx"),
+  logout: resolve(__dirname, "logout/index.tsx")
 };
 
 /**
@@ -24,6 +31,10 @@ const filter = viewName => [
 ];
 
 const keys = Object.keys(entry);
+log.info("Usage: \n");
+for(const key of keys){
+  log.info("--view %s \n", key);
+}
 /**
  * @type {import("webpack").Configuration}
  */

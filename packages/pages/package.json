@@ -1,12 +1,12 @@
 {
-  "name": "@local/xpresso-pages",
+  "name": "@local/pages",
   "private": true,
   "version": "1.0.0",
   "description": "./pages",
-  "main": "index.js",
+  "main": "/dev/index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server"
   },
   "keywords": [],
   "author": "",
