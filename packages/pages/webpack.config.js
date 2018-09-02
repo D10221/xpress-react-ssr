@@ -1,3 +1,6 @@
+/**
+ * LOCAL config
+ */
 const { resolve, join } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { compilerOptions } = require("./tsconfig.json");
@@ -8,12 +11,9 @@ const log = Log(console.log.bind(console));
 /**
  * @type {import("webpack").Entry}
  */
-const entry = {  
-  admin: resolve(__dirname, "admin/index.tsx"),
-  dev: resolve(__dirname, "dev/index.tsx"),
-  home: resolve(__dirname, "home/index.tsx"),
-  login: resolve(__dirname, "login/index.tsx"),
-  logout: resolve(__dirname, "logout/index.tsx")
+const entry = {
+  _dev_: resolve(__dirname, "_dev_/index.tsx"),
+  ...require("./index").entry
 };
 
 /**
@@ -32,7 +32,7 @@ const filter = viewName => [
 
 const keys = Object.keys(entry);
 log.info("Usage: \n");
-for(const key of keys){
+for (const key of keys) {
   log.info("--view %s \n", key);
 }
 /**

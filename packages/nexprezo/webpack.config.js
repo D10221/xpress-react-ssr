@@ -32,7 +32,7 @@ const { PAGES } = env.parse(readFileSync(resolve(process.cwd(), ".env")));
  * Point sub-repo from package name
  */
 const context = dirname(require.resolve(PAGES));
-logger.info("PAGES -> context: %s", context)
+logger.info("PAGES -> context: %s", context);
 /**
  * let PAGES package "choose" tsconfig
  */
@@ -42,13 +42,16 @@ const { compilerOptions } = require(join(
 ));
 const { outDir } = compilerOptions;
 /**
- *  @param page {string}
- *  @return {string}
  *
- *  server loads page from default export , webpack bundles "index"
+ * @param {import("webpack").Entry} entry
+ * @return {import("webpack").Entry} entry
  */
-function _resolve(page) {
-  return [context, page, "index.tsx"].join("/");
+function hot(entry) {
+  if (!isDev) return entry;
+  return Object.keys(entry).reduce((out, key) => {
+    out[key] = [entry[key], hotMiddlewareScript];
+    return out;
+  }, {});
 }
 /**
  * @type {import("webpack").Configuration}
@@ -56,12 +59,7 @@ function _resolve(page) {
 const config = {
   mode,
   context,
-  entry: {
-    admin: [_resolve("admin"), isDev && hotMiddlewareScript].filter(x => !!x),
-    home: [_resolve("home"), isDev && hotMiddlewareScript].filter(x => !!x),
-    login: [_resolve("login"), isDev && hotMiddlewareScript].filter(x => !!x),
-    logout: [_resolve("logout"), isDev && hotMiddlewareScript].filter(x => !!x)
-  },
+  entry: hot(require(PAGES).entry),
   output: {
     publicPath: process.env.PUBLIC_PATH,
     path: resolve(cwd, outDir, "public"),
