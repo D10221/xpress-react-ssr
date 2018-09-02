@@ -2,17 +2,16 @@
   "name": "@local/nexprezo",
   "private": true,
   "version": "0.0.1",
-  "description": "Nexprezo",
+  "description": "Nexprezo",  
   "main": "dist/index.js",
   "bin": {
     "nexprezo": "bin/nexprezo"
   },
   "scripts": {
-    "build-pages": "yarn workspaces @local/pages build",
-    "build": "rimraf dist && tsc -p tsconfig.prod.json && webpack --mode=production && yarn build-pages",
+    "build": "bin/nexprezo --build",
     "test": "jest --env=node --ci --config=./jest.json",
     "dev": "nodemon --delay 1000ms",
-    "start": "node start"
+    "start": "bin/nexprezo --start"
   },
   "keywords": [],
   "author": "",
