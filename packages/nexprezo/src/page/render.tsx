@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/server";
 import { RequestHandler } from "express-serve-static-core";
-import resolvePage from "./resolve-page";
-
+import resolvePage from "./resolve";
 const { PUBLIC_PATH } = process.env;
+/** */
 export default (page: string): RequestHandler => {
     /** */
-    return (req, res, next) => {
-        const title = "React App";
+    return (req, res, next) => {       
+        const { title } = req.app.locals;
         try {
             const Page = resolvePage(page);
             res.send(

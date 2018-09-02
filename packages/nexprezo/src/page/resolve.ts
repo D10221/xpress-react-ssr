@@ -5,7 +5,6 @@ const { PAGES } = process.env;
 export default (page: string)=>{
     return require([
         PAGES, 
-        process.env.NODE_ENV === "production" ? "dist": undefined,
         page
     ].join("/")).default
 }
