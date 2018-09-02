@@ -11,7 +11,9 @@ export default async function configure(app: Express) {
   if (process.env.NODE_ENV !== "production") {
     const useWebpack = (await import("@local/dev-middleware")).default;
     useWebpack(app, join(__dirname, "..", "webpack.config"), {
-      devMiddlewareOptions: {}
+      devMiddlewareOptions: {
+        // ...
+      }
     });
   }
   app.use(cookieParser());
@@ -37,8 +39,8 @@ export default async function configure(app: Express) {
     auth.logoutHandler,
     PlainErrorHandler()
   ]);
-  /** Api */
-  app.post("/api/auth/refresh", [
+  /** ? */
+  app.post("/auth/refresh", [
     auth.middleware,
     auth.refreshHandler,
     PlainErrorHandler()
