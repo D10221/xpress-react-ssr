@@ -7,7 +7,7 @@ export default {
     return Promise.resolve(!!tokens.find(x => x === id));
   },
   add(id: string) {
-    tokens = tokens.filter(x => x !== id);
+    tokens = tokens.filter(x => x !== id).concat([id]);
     return Promise.resolve();
   }
 };
