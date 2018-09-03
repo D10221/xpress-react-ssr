@@ -27,7 +27,10 @@ const hotMiddlewareScript = "webpack-hot-middleware/client";
 /**
  * PAGES is a Module Name
  */
-const { PAGES } = env.parse(readFileSync(resolve(process.cwd(), ".env")));
+const PAGES =
+  args.pages ||
+  process.env.PAGES ||
+  env.parse(readFileSync(resolve(process.cwd(), ".env"))).PAGES;
 /**
  * Point sub-repo from package name
  */

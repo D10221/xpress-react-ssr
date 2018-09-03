@@ -5,11 +5,11 @@ import resolvePage from "./resolve";
 const { PUBLIC_PATH } = process.env;
 /** */
 export default (page: string): RequestHandler => {
+    const Page = resolvePage(page);
     /** */
     return (req, res, next) => {       
         const { title } = req.app.locals;
         try {
-            const Page = resolvePage(page);
             res.send(
                 ReactDOM.renderToString(<html lang="en">
                     <head>
