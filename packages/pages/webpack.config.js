@@ -31,9 +31,13 @@ const filter = viewName => [
 ];
 
 const keys = Object.keys(entry);
-log.info("Usage: \n");
-for (const key of keys) {
-  log.info("--view %s \n", key);
+if (!args.view) {
+  log.info(`
+Usage: 
+--view=${keys.join("|")}
+`);
+} else {
+  log.info("Using --view:%s", args.view);
 }
 /**
  * @type {import("webpack").Configuration}
@@ -41,7 +45,7 @@ for (const key of keys) {
 const config = {
   mode: "development",
   context: __dirname,
-  entry: !args.view ? entry : keys.reduce(filter(args.view)),
+  entry: !args.view ? entry : keys.reduce(...filter(args.view)),
   output: {
     path: join(__dirname, "build", "public"),
     filename: "static/[name].js"

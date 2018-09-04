@@ -2,10 +2,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const { resolve } = require("path");
 /** */
 module.exports = {
-  Admin: require("./dist/admin"),
-  Home: require("./dist/home"),
-  Login: require("./dist/login"),
-  Logout: require("./dist/logout"),
+  Admin: require("./admin"),
+  Home: require("./home"),
+  Login: require("./login"),
+  Logout: require("./logout"),
   /**
    * @type {import("webpack").Entry}
    */
