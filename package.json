@@ -19,6 +19,8 @@
     "packages/tiny-auth",
     "packages/tiny-auth-redux",
     "packages/tiny-store",
+    "packages/local-users",
+    "packages/local-auth",
     "packages/dev-middleware",
     "packages/pages",    
     "packages/nexprezo"

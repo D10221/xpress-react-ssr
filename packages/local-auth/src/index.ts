@@ -1,4 +1,4 @@
-import users, { User } from "./users";
+import users, { User } from "@local/users";
 import tokens from "./tokens";
 import { Auth, redirectOnAuthError } from "@local/tiny-auth";
 import { hostname } from "os";
