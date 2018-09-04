@@ -62,7 +62,7 @@ function hot(entry) {
 const config = {
   mode,
   context,
-  entry: hot(require(PAGES).entry),
+  entry: hot(require(PAGES).default),
   output: {
     publicPath: process.env.PUBLIC_PATH,
     path: resolve(cwd, outDir, "public"),

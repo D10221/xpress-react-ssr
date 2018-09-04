@@ -1,3 +1,5 @@
+Object.defineProperty(exports, "__esModule", { value: true });
+const { resolve } = require("path");
 /** */
 module.exports = {
   Admin: require("./dist/admin"),
@@ -7,10 +9,10 @@ module.exports = {
   /**
    * @type {import("webpack").Entry}
    */
-  entry: {
-    admin: require.resolve("./admin"),
-    home: require.resolve("./home"),
-    login: require.resolve("./login"),
-    logout: require.resolve("./logout")
+  default: {
+    admin: resolve(__dirname, "admin/index.tsx"),
+    home: resolve(__dirname, "home/index.tsx"),
+    login: resolve(__dirname, "login/index.tsx"),
+    logout: resolve(__dirname, "logout/index.tsx")
   }
 };

@@ -13,7 +13,7 @@ const log = Log(console.log.bind(console));
  */
 const entry = {
   _dev_: resolve(__dirname, "_dev_/index.tsx"),
-  ...require("./index").entry
+  ...require("./index").default
 };
 
 /**
@@ -41,7 +41,7 @@ for (const key of keys) {
 const config = {
   mode: "development",
   context: __dirname,
-  entry: !args.view ? entry : keys.reduce(...filter(args.view)),
+  entry: !args.view ? entry : keys.reduce(filter(args.view)),
   output: {
     path: join(__dirname, "build", "public"),
     filename: "static/[name].js"
