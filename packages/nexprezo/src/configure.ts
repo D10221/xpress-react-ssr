@@ -1,7 +1,7 @@
 import { Express } from "express-serve-static-core";
 import { static as serverStatic } from "express";
 import { join } from "path";
-import { render } from "./page";
+import render from "./render";
 import auth, { redirectOnAuthError } from "./auth";
 import cookieParser from "cookie-parser";
 import { json } from "body-parser";
