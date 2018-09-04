@@ -1,7 +1,6 @@
 import { Express } from "express-serve-static-core";
 import { static as serverStatic } from "express";
 import { join } from "path";
-import render from "./render";
 import auth, { redirectOnAuthError } from "@local/auth";
 import cookieParser from "cookie-parser";
 import { json } from "body-parser";
@@ -24,16 +23,21 @@ export default async function configure(app: Express) {
     req.app.locals.title = `Nexprezo: ${req.path}`;
     next();
   });
-  app.get("/", render("home"));
-  app.get("/login", render("login"));
+  const { default: render } = await import("@local/render");
+  /**
+   * windowstateStore({ [windowStateStore.$KEY] = { ...x }})
+   */
+  const getState = () => ({});
+  app.get("/", render("home", getState));
+  app.get("/login", render("login", getState));
   app.get("/logout", [
     auth.middleware,
-    render("logout"),
+    render("logout", getState),
     redirectOnAuthError("/login")
   ]);
   app.get("/admin", [
     auth.middleware,
-    render("admin"),
+    render("admin", getState),
     redirectOnAuthError("/login")
   ]);
   /** Api */

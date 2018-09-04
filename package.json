@@ -22,7 +22,8 @@
     "packages/local-users",
     "packages/local-auth",
     "packages/dev-middleware",
-    "packages/pages",    
+    "packages/render",
+    "packages/pages",
     "packages/nexprezo"
   ],
   "dependencies": {

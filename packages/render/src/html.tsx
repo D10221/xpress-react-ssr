@@ -1,6 +1,6 @@
 import React, { StatelessComponent } from "react";
 
-const HTML: StatelessComponent<{ title: any, scripts: string[], favicon: any, manifest: any }> = ({ title, scripts, manifest, favicon, children }) => {
+const HTML: StatelessComponent<{ title: any, scripts: string[], favicon: any, manifest: any, state: {} }> = ({ title, scripts, manifest, favicon, state, children }) => {
     return <html lang="en">
         <head>
             <meta charSet="UTF-8" />
@@ -12,6 +12,9 @@ const HTML: StatelessComponent<{ title: any, scripts: string[], favicon: any, ma
                 rel="manifest"
                 href={manifest}
             />
+            {state && <script>
+                window.$STATE = ${JSON.stringify(state)}
+            </script>}
         </head>
         <body>
             {children}
