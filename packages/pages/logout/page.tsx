@@ -22,7 +22,7 @@ class View extends Component<{ classes: ClassNameMap }, ViewState> {
       this.setState({ busy: true, error: undefined });
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      const response = await fetch(`${document.location.pathname}`, {
+      const response = await fetch("/api/auth/logout", {
         method: "POST",
         body: JSON.stringify({}),
         headers: {

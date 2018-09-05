@@ -40,7 +40,7 @@ class LoginView extends Component<ViewProps> {
     handleLogin: React.EventHandler<any> = async () => {
         try {
             const { username, password } = this.state;
-            await this.props.login(username, password);
+            await this.props.login(username, password, "/api/auth/login");
             if (!!this.props.success) {
                 const a: HTMLAnchorElement = document.createElement("a");
                 a.href = this.state.referer || "/";

@@ -9,16 +9,20 @@ import {
 /** Don't import redux-promise @types it breaks Dispatch */
 const promiseMiddleware = require("redux-promise").default as Middleware;
 /** */
-export default function(reducers: {}, middleware: Middleware[] = []) {
-  const actionContext = {};
+export default function(
+  reducers: {},
+  middleware: Middleware[] = [],
+  actionContext?: {}
+) {
+  actionContext = actionContext || {};
+  const isWindow = typeof window === "object";
   /**
    * dev-tools
    */
-  const composeEnhancers =
+  const enhance =
     process.env.NODE_ENV === "production"
       ? compose
-      : typeof window === "object" &&
-        (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+      : isWindow && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
         ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
             // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
           })
@@ -29,7 +33,7 @@ export default function(reducers: {}, middleware: Middleware[] = []) {
     combineReducers({
       ...reducers
     }),
-    composeEnhancers(applyMiddleware(
+    enhance(applyMiddleware(
       thunk.withExtraArgument(actionContext),
       promiseMiddleware,
       ...middleware

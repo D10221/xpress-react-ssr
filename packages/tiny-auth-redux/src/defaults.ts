@@ -1,11 +1,11 @@
 import { ViewState } from "./types";
 
-export const STORE_KEY = "@tiny-auth/login";
+export const STORE_KEY = "@tiny-auth";
 const isWindow = typeof window !== "undefined";
 export const defaultState: ViewState = {
   token: (isWindow && localStorage.getItem("token")) || "",
   busy: false,
   error: undefined,
   authenticated: false,
-  success: false  
+  success: false
 };
