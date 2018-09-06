@@ -1,0 +1,81 @@
+{
+  "name": "react-ssr",
+  "version": "1.0.0",
+  "description": "fork of https://github.com/alexnm/react-ssr",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --config=./jest.json --ci --env=node",
+    "build": "npm run clean && tsc -p ./tsconfig.prod.json && webpack --progress --mode=production",
+    "dev": "npm run clean && npm-run-all --parallel server client",
+    "server": "nodemon index.js",
+    "client": "webpack --watch --progress",
+    "lint": "tslint src",
+    "bundlesize": "bundlesize",
+    "precommit": "tslint src --quiet",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.3.0",
+    "minimist": "^1.2.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-helmet": "*",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^3.0.1",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.1",
+    "@types/express": "^4.16.0",
+    "@types/express-jwt": "^0.0.40",
+    "@types/jsonwebtoken": "^7.2.8",
+    "@types/react": "^16.4.11",
+    "@types/react-dom": "^16.0.7",
+    "@types/react-helmet": "latest",
+    "@types/react-redux": "^6.0.6",
+    "@types/react-router": "^4.0.30",
+    "@types/react-router-dom": "^4.3.0",
+    "@types/uuid": "^3.4.4",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^1.0.0",
+    "express": "^4.16.3",
+    "file-loader": "^2.0.0",
+    "friendly-errors-webpack-plugin": "latest",
+    "jest": "^23.5.0",
+    "nodemon": "^1.18.3",
+    "npm-run-all": "latest",
+    "rimraf": "^2.6.2",
+    "style-loader": "^0.23.0",
+    "ts-jest": "^23.1.4",
+    "ts-loader": "^5.0.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3",
+    "webpack": "^4.17.1",
+    "webpack-bundle-analyzer": "latest",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5",
+    "webpack-manifest-plugin": "^2.0.3"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "Firefox ESR"
+  ],
+  "bundlesize": [
+    {
+      "path": "./dist/js/app.bundle.js",
+      "maxSize": "170 kB"
+    },
+    {
+      "path": "./dist/js/lib.bundle.js",
+      "maxSize": "110 kB"
+    }
+  ],
+  "author": "",
+  "license": "MIT"
+}

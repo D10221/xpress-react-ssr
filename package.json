@@ -24,6 +24,7 @@
     "packages/dev-middleware",
     "packages/render",
     "packages/pages",
+    "packages/react-ssr",
     "packages/nexprezo"
   ],
   "dependencies": {

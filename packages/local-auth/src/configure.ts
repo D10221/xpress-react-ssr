@@ -11,11 +11,11 @@ const configure = async <T extends Express | ExpressRouter>(app: T): Promise<T> 
     ]);
     app.post("/logout", [
       json(),
-      auth.middleware,
+      auth.middleware(),
       auth.logoutHandler,    
     ]);
     app.post("/refresh", [
-      auth.middleware,
+      auth.middleware(),
       auth.refreshHandler,    
     ]);
     return app;    
