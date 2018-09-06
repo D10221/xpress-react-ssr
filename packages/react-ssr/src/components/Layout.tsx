@@ -9,7 +9,7 @@ export interface LayoutProps {
 
 export default class Layout extends React.Component<LayoutProps> {
     state = {
-        title: "Welcome to React SSR!",
+        title: "Welcome",
     };
 
     render() {

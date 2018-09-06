@@ -6,9 +6,11 @@ import { redirectOnAuthError } from "@local/tiny-auth";
 import cookieParser from "cookie-parser";
 /** */
 export default async (app: Express) => {
+    
     const {
         default: auth,
-        configure: configureAuth
+        configure: configureAuth,
+        requireRole
     } = await import("@local/auth");
     
     app.use(express.static(path.resolve(__dirname, "../dist")));
@@ -18,8 +20,13 @@ export default async (app: Express) => {
         "/api/auth",
         (await configureAuth(Router())).use(PlainErrorHandler())
     );
-    app.use("/secret", [
+    app.use("/profile", [
         auth.middleware(), 
+        redirectOnAuthError("/you-should-be-logged-in")
+    ])
+    app.use("/admin", [
+        auth.middleware(), 
+        requireRole(["admin"]),
         redirectOnAuthError("/you-should-be-logged-in")
     ])
     app.get("/*", [

@@ -3,8 +3,9 @@ import { RouteProps } from "react-router";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import { Connected as Home } from "./components/home";
-import Secret from "./components/Secret";
+import { Connected as Profile } from "./components/profile";
 import { YouShouldBeLoggedIn, Login } from "./components/login";
+import { Connected as Admin} from "./components/admin";
 /** */
 export interface RouteDefinition extends RouteProps { }
 /** */
@@ -27,8 +28,13 @@ const routes: (RouteProps & {
       exact: true
     },
     {
-      path: "/secret",
-      component: Secret,
+      path: "/profile",
+      component: Profile,
+      exact: true
+    },
+    {
+      path: "/admin",
+      component: Admin,
       exact: true
     },
     {

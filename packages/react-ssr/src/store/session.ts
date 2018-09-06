@@ -14,7 +14,10 @@ export const initialize = (payload: Request): InitializeAction => ({
   payload
 });
 
-const defaultState = { loggedIn: false };
+const defaultState = {
+  loggedIn: false,
+  user: undefined as ({} | null | undefined)
+};
 
 export type State = typeof defaultState;
 
@@ -22,7 +25,9 @@ export const reducer: Reducer = (state: State = defaultState, action): State => 
   switch (action.type) {
     case actionTypes.INITIALIZE: {
       const { payload } = action as InitializeAction;
-      return { loggedIn: !!payload.user };
+      const { user } = payload;
+      const { password, token, ...rest } = user || { password: undefined, token: undefined };
+      return { loggedIn: !!user, user: rest };
     }
     default:
       return state;

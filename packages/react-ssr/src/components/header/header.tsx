@@ -6,9 +6,13 @@ if (typeof window !== "undefined") {
   require("./header.css");
 }
 
-export interface HeaderProps { loggedIn: boolean };
+export interface HeaderProps { loggedIn: boolean, user: { roles?: string[] } | null | undefined };
 
-const Header: StatelessComponent<HeaderProps> = ({ loggedIn }) => (
+function hasRole(user: { roles?: string[] } | null | undefined, role: string) {
+  return user && user.roles && user.roles.indexOf(role) !== -1;
+}
+
+const Header: StatelessComponent<HeaderProps> = ({ loggedIn, user }) => (
   <div className="nav">
     <Link className="link" to="/">
       Home
@@ -19,14 +23,17 @@ const Header: StatelessComponent<HeaderProps> = ({ loggedIn }) => (
     <Link className="link" to="/contact">
       Contact
     </Link>
+    {loggedIn && hasRole(user, "admin") && <Link className="link" to="/admin">
+      Admin
+    </Link>}
+    {loggedIn && (
+      <Link className="link" to="/profile">
+        Profile
+      </Link>
+    )}
     {!loggedIn && (
       <Link className="link" to="/login">
         Login
-      </Link>
-    )}
-    {loggedIn && (
-      <Link className="link" to="/secret">
-        Secret
       </Link>
     )}
     {loggedIn && (
