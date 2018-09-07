@@ -7,7 +7,9 @@ export const actionTypes = {
   INITIALIZE: `${STORE_KEY}/INITIALIZE`
 };
 
-type InitializeAction = Action<typeof actionTypes.INITIALIZE> & { payload: Request };
+type InitializeAction = Action<typeof actionTypes.INITIALIZE> & {
+  payload: Request;
+};
 
 export const initialize = (payload: Request): InitializeAction => ({
   type: actionTypes.INITIALIZE,
@@ -16,17 +18,23 @@ export const initialize = (payload: Request): InitializeAction => ({
 
 const defaultState = {
   loggedIn: false,
-  user: undefined as ({} | null | undefined)
+  user: undefined as {} | null | undefined
 };
 
 export type State = typeof defaultState;
 
-export const reducer: Reducer = (state: State = defaultState, action): State => {
+export const reducer: Reducer = (
+  state: State = defaultState,
+  action
+): State => {
   switch (action.type) {
     case actionTypes.INITIALIZE: {
       const { payload } = action as InitializeAction;
       const { user } = payload;
-      const { password, token, ...rest } = user || { password: undefined, token: undefined };
+      const { password, token, ...rest } = user || {
+        password: undefined,
+        token: undefined
+      };
       return { loggedIn: !!user, user: rest };
     }
     default:
