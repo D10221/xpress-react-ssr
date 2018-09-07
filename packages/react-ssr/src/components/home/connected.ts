@@ -1,15 +1,18 @@
 import { createSelector } from "reselect";
 import { connect } from "react-redux";
-import * as dataStore from "../../store/data";
+import { ComponentType } from "react";
+import * as circuits from "../../api/circuits/store";
 import Home from "./Home";
 
-const selector = createSelector(dataStore.selector, circuits => ({ circuits }));
+const selector = createSelector(
+  circuits.selector,
+  circuits => ({ circuits }));
 
-const Connected = connect(
+const Connected: ComponentType<any> = connect(
   selector,
-  dataStore.bindActions
+  circuits.bindActions
 )(Home);
 
-(Connected as any).serverFetch = dataStore.fetchData;
+(Connected as any).serverFetch = circuits.actions.fetchData;
 
 export default Connected;

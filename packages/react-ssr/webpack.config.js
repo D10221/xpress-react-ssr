@@ -18,7 +18,7 @@ const { compilerOptions } = require(join(
 
 const plugins = [
     new FriendlyErrorsWebpackPlugin(),
-    new CopyWebpackPlugin([{ from: resolve(__dirname, "data") }]),
+    // new CopyWebpackPlugin([{ from: resolve(__dirname, "data") }]),
     new ManifestPlugin({
         fileName: "asset-manifest.json",
         filter: x => {
