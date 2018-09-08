@@ -1,25 +1,21 @@
 import React from "react";
-import { Circuits } from "../circuits";
+import { Connected as Circuits } from "../circuits";
 
 export interface HomeProps {
-  fetchData: (...args: any[]) => any;
-  circuits: any;
+  
 }
 
 export default class Home extends React.Component<HomeProps> {
+  
+  static serverFetch = [
+    // children requirements
+    (Circuits as any).serverFetch
+  ];
 
-  componentDidMount() {
-    if (this.props.circuits.length <= 0) {
-      console.log("Client Fetching...");
-      this.props.fetchData();
-    }
-  }
-
-  render() {
-    const { circuits, fetchData } = this.props;
+  render() {    
     return (
       <div>
-        <Circuits {...circuits} fetchData={fetchData} />
+        <Circuits />
       </div>
     );
   }
