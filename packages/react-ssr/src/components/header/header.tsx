@@ -16,37 +16,39 @@ function hasRole(user: { roles?: string[] } | null | undefined, role: string) {
 }
 
 const Header: StatelessComponent<HeaderProps> = ({ loggedIn, user }) => (
-  <div className="header">
-  
-    <div className="nav">
-      <Link className="link" to="/">
-        Home
-      </Link>
-      <Link className="link" to="/about">
-        About
-      </Link>
-      <Link className="link" to="/contact">
-        Contact
-      </Link>
-      {loggedIn &&
-        hasRole(user, "admin") && (
-          <Link className="link" to="/admin">
-            Admin
+  <header>
+    <nav>
+      <h1>Title</h1>
+      <div className="nav-links">
+        <Link className="link" to="/">
+          Home
+        </Link>
+        <Link className="link" to="/about">
+          About
+        </Link>
+        <Link className="link" to="/contact">
+          Contact
+        </Link>
+        {loggedIn &&
+          hasRole(user, "admin") && (
+            <Link className="link" to="/admin">
+              Admin
+            </Link>
+          )}
+        {loggedIn && (
+          <Link className="link" to="/profile">
+            Profile
           </Link>
         )}
-      {loggedIn && (
-        <Link className="link" to="/profile">
-          Profile
-        </Link>
-      )}
-      {!loggedIn && (
-        <Link className="link" to="/login">
-          Login
-        </Link>
-      )}
-      {loggedIn && <LogoutButton />}
-    </div>
-  </div>
+        {!loggedIn && (
+          <Link className="link" to="/login">
+            Login
+          </Link>
+        )}
+        {loggedIn && <LogoutButton />}
+      </div>
+    </nav>
+  </header>
 );
 
 export default Header;

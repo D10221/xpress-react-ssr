@@ -14,11 +14,17 @@ export default class Layout extends React.Component<LayoutProps> {
     return (
       <div className="layout-root">
         <Header />
-        <Switch>
-          {routes.map(route => (
-            <Route key={route.path} {...route} />
-          ))}
-        </Switch>
+        <div className="layout-content">
+          <Switch>
+            {routes.map(route => (
+              <Route key={route.path} {...route} />
+            ))}
+          </Switch>
+        </div>
+        <footer>
+          <div>... this is the footer</div>
+          <div>... this is the footer</div>
+        </footer>
       </div>
     );
   }
