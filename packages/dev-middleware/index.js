@@ -30,7 +30,7 @@ const defaultOptions = {
  * @param options {{ devMiddlewareOptions,  hotMiddlewareOptions }}
  */
 function useWebpack(app, config, options = defaultOptions) {
-  if (process.eventNames.NODE_ENV === "production") return app;
+  if (process.env.NODE_ENV === "production") return app;
 
   const webpack = require("webpack");
   const webpackDevMiddleware = require("webpack-dev-middleware");
