@@ -25,7 +25,7 @@ const render: RequestHandler = async (req, res) => {
               content="width=device-width, initial-scale=1.0"
             />
             <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-            <title>React SSR</title>
+            <title>{"SSR: "+req.path}</title>
             {helmetData.title.toComponent()}
             {helmetData.meta.toComponent()}
             <link rel="shortcut icon" href="/public/favicon.ico" />
