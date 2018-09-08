@@ -1,5 +1,5 @@
 import React, { ComponentType, StatelessComponent } from "react";
-import Layout from "./Layout";
+import Layout from "./layout";
 import { Store } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter, StaticRouter } from "react-router-dom";

@@ -1,7 +1,11 @@
-.nav  {
+.header {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
 }
 .link {
     margin: auto 1rem;
+}
+.nav  {
+    display: flex;
+    flex-direction: row;
 }
