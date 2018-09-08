@@ -7,9 +7,9 @@ export interface HomeProps {
 
 export default class Home extends React.Component<HomeProps> {
   
-  static serverFetch = [
+  static requirements = [
     // children requirements
-    (Circuits as any).serverFetch
+    (Circuits as any).requirements
   ];
 
   render() {    

@@ -1,23 +1,29 @@
 import express, { Express, Router } from "express";
-import { resolve, join } from "path";
+import { resolve, join, extname, dirname } from "path";
 import render from "./render";
 import PlainErrorHandler from "./plain-error-handler";
 import { redirectOnAuthError } from "@local/tiny-auth";
 import cookieParser from "cookie-parser";
-import dataRequirements from "./data-requirements";
+import Requirements from "./requirements";
+import args from "./args";
+
 /** */
 export default async (app: Express) => {
-
-  const useWebpack = (await import("@local/dev-middleware")).default;
+  if (!!args["dev-middleware"]) {
+    const useWebpack = (await import("@local/dev-middleware")).default;
     useWebpack(app, join(__dirname, "..", "webpack.config"), {
       devMiddlewareOptions: {
         // ...
       }
     });
-  
+  }
+
   /** serve/assets */
-  app.use(express.static(resolve(__dirname, "../dist/public")));
-  
+  const isSrc = /(\/||\\)src$/.test(dirname(__filename));
+  const dir = resolve(__dirname, isSrc ? "../dist/public" : "public");
+  console.log("Public Dir: %s", dir);
+  app.use(express.static(dir));
+
   /** Auth */
   const {
     default: auth,
@@ -49,8 +55,8 @@ export default async (app: Express) => {
   /** if isn't found handover to react-router */
   app.get("/*", [
     auth.middleware(false), // include user
-    dataRequirements(routes), // set store data if route requests it
-    render //render app request=handler
+    Requirements(routes), // action app/page/route requirements before render
+    render //render app/page/route request-handler
   ]);
   return app;
 };

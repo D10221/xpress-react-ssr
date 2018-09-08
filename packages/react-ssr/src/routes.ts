@@ -7,10 +7,13 @@ import { Connected as Profile } from "./components/profile";
 import { YouShouldBeLoggedIn, Login } from "./components/login";
 import { Connected as Admin } from "./components/admin";
 /** */
+export type AnyFunc = (...args: any[]) => any;
+export type RouteRequirements = AnyFunc|(AnyFunc[]);
+/** */
 export interface RouteDefinition extends RouteProps {
   private?: boolean;
   roles?: string[];
-  component: ComponentType<any> & { serverFetch?: (...args: any[]) => any };  
+  component: ComponentType<any> & { requirements?: RouteRequirements };  
 }
 /** */
 const routes: RouteDefinition[] = [

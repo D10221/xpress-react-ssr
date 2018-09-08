@@ -13,6 +13,6 @@ const Connected: ComponentType<any> = connect(
   circuits.bindActions
 )(View);
 
-(Connected as any).serverFetch = circuits.actions.fetchData;
+(Connected as any).requirements = [circuits.actions.fetchData];
 
 export default Connected;
