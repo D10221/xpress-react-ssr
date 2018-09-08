@@ -1,8 +1,8 @@
 {
-  "name": "xpresso-project",
+  "name": "xpress-react-ssr",
   "version": "0.0.1",
   "private": true,
-  "description": "minimal? express react ssr",
+  "description": "express react ssr",
   "main": "index.js",
   "scripts": {
     "start": "cd packages/xpresso && npm start",
@@ -21,11 +21,8 @@
     "packages/tiny-store",
     "packages/local-users",
     "packages/local-auth",
-    "packages/dev-middleware",
-    "packages/render",
-    "packages/pages",
-    "packages/react-ssr",
-    "packages/nexprezo"
+    "packages/dev-middleware",    
+    "packages/react-ssr"    
   ],
   "dependencies": {
     "lerna": "2.11.0",

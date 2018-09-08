@@ -1,5 +1,5 @@
 import express, { Express, Router } from "express";
-import path from "path";
+import { resolve, join } from "path";
 import render from "./render";
 import PlainErrorHandler from "./plain-error-handler";
 import { redirectOnAuthError } from "@local/tiny-auth";
@@ -7,9 +7,16 @@ import cookieParser from "cookie-parser";
 import dataRequirements from "./data-requirements";
 /** */
 export default async (app: Express) => {
+
+  const useWebpack = (await import("@local/dev-middleware")).default;
+    useWebpack(app, join(__dirname, "..", "webpack.config"), {
+      devMiddlewareOptions: {
+        // ...
+      }
+    });
   
   /** serve/assets */
-  app.use(express.static(path.resolve(__dirname, "../dist/public")));
+  app.use(express.static(resolve(__dirname, "../dist/public")));
   
   /** Auth */
   const {
