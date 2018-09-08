@@ -9,7 +9,7 @@ import dataRequirements from "./data-requirements";
 export default async (app: Express) => {
   
   /** serve/assets */
-  app.use(express.static(path.resolve(__dirname, "../dist")));
+  app.use(express.static(path.resolve(__dirname, "../dist/public")));
   
   /** Auth */
   const {

@@ -34,7 +34,8 @@ const render: RequestHandler = async (req, res) => {
           <div id="app">
             <App {...{ store, location: req.url, context }} />
           </div>
-          <script src="./app.bundle.js" />
+          <script src="static/js/app.js" />
+          <script src="static/js/vendors.js" />
         </body>
       </html>
     )
