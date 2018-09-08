@@ -24,9 +24,6 @@ module.exports = function(context) {
 
   const plugins = [
     new FriendlyErrorsWebpackPlugin(),
-    new CopyWebpackPlugin([
-      { from: resolve(context, "public", "favicon.ico") }
-    ]),
     new ManifestPlugin({
       fileName: "asset-manifest.json",
       filter: x => {
@@ -54,7 +51,8 @@ module.exports = function(context) {
       display: "standalone",
       theme_color: "#000000",
       background_color: "#ffffff"
-    })
+    }),
+    new CopyWebpackPlugin([{ from: resolve(context, "public", "favicon.ico") }])
   ];
 
   return {
