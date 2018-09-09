@@ -1,8 +1,12 @@
 import React, { ComponentType, StatelessComponent } from "react";
-import Layout from "./layout";
+import { Layout } from "./layout";
 import { Store } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter, StaticRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+import routes from "../routes";
+import { Connected as Header } from "./header";
+
 const isWindow = typeof window !== "undefined";
 
 let Router: ComponentType = isWindow ? BrowserRouter : StaticRouter;
@@ -20,7 +24,13 @@ const App: ComponentType<{
   return (
     <Provider store={store}>
       <Router {...{ context, location, basename }}>
-        <Layout />
+        <Layout Header={<Header />}>
+          <Switch>
+            {routes.map(route => (
+              <Route key={route.path} {...route} />
+            ))}
+          </Switch>
+        </Layout>
       </Router>
     </Provider>
   );
