@@ -1,28 +1,22 @@
-import express, { Express, Router } from "express";
-import { resolve, join, extname, dirname } from "path";
+import { Express, Router } from "express";
 import render from "./render";
 import PlainErrorHandler from "./plain-error-handler";
 import { redirectOnAuthError } from "@local/tiny-auth";
 import cookieParser from "cookie-parser";
 import Requirements from "./requirements";
-import args from "./args";
 
 /** */
 export default async (app: Express) => {
-  if (!!args["dev-middleware"]) {
-    const useWebpack = (await import("@local/dev-middleware")).default;
-    useWebpack(app, join(__dirname, "..", "webpack.config"), {
-      devMiddlewareOptions: {
-        // ...
-      }
-    });
-  }
-
-  /** serve/assets */
+  
+  /** use webpack-dev-server: if this is ./src */
+  const { resolve, dirname } = await import("path");
   const isSrc = /(\/||\\)src$/.test(dirname(__filename));
-  const dir = resolve(__dirname, isSrc ? "../dist/public" : "public");
-  console.log("Public Dir: %s", dir);
-  app.use(express.static(dir));
+  if (!isSrc) {
+    const express = await import("express");
+    app.use(express.static(resolve(__dirname, "public")));
+  } else {
+    console.log("Not serving static");
+  }
 
   /** Auth */
   const {
@@ -53,7 +47,7 @@ export default async (app: Express) => {
     }
   }
   /** if isn't found handover to react-router */
-  app.get("/*", [
+  app.get(/(\/)?.*/, [
     auth.middleware(false), // include user
     Requirements(routes), // action app/page/route requirements before render
     render //render app/page/route request-handler

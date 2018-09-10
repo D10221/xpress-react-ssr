@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --config=./jest.json --ci --env=node",
     "build": "npm run clean && tsc -p ./tsconfig.prod.json && webpack --progress --mode=production",
-    "dev": "npm run clean && npm-run-all --parallel server client",
+    "dev": "npm run clean && webpack-dev-server --mode=development --inspect",
     "server": "nodemon index.js",
     "client": "webpack --watch --progress",
     "lint": "tslint src",

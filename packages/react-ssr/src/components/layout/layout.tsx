@@ -16,7 +16,12 @@ export default class Layout extends React.Component<LayoutProps> {
             {this.props.children}
           </div>
           <footer>
-            <div>... this is the footer</div>
+            <div> App footer</div>
+            <nav>
+              <a >LINK #1</a>
+              <a >LINK #2</a>
+              <a >LINK #3</a>
+            </nav>
           </footer>
         </div>
       </>

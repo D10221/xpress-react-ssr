@@ -5,6 +5,7 @@ const styles = css`
     margin: 0;
     padding: 0;
   }
+  /* React: Entry point */
   #app {
     display: flex;
     flex-direction: column;
@@ -14,6 +15,7 @@ const styles = css`
     margin: 0;
     padding: 0;
   }
+  /* App 1st element */ 
   .layout-root {
     display: flex;
     flex-direction: column;
@@ -23,9 +25,11 @@ const styles = css`
     margin: 0;
     padding: 0;
   }
+  /* routes target element*/
   .layout-content {
     flex: 1 0;
     background-color: whitesmoke;
+    padding: 0 1rem
   }
 
   header {
@@ -56,6 +60,16 @@ const styles = css`
     padding: 0.5rem;
     background-color: cornflowerblue;
     color: aliceblue;
+  }
+  footer nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: "space-between";
+    flex: 1 0;
+    justify-content: flex-end;
+  }
+  footer nav a {
+    margin: 0 0.5rem 0 0 ;    
   }
 `;
 export default styles;

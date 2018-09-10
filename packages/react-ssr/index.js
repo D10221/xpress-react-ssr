@@ -9,8 +9,6 @@ if(!!args.production){
     process.env.NODE_ENV = "production";
     log.warn("NODE_ENV:%s", process.env.NODE_ENV);
 }
-if (process.env.NODE_ENV !== "production") {
-    require("./src");
-} else {
+if (process.env.NODE_ENV === "production") {
     require("./dist");
-}
+} 
