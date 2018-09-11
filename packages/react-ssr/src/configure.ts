@@ -7,7 +7,6 @@ import Requirements from "./requirements";
 
 /** */
 export default async (app: Express) => {
-  
   /** use webpack-dev-server: if this is ./src */
   const { resolve, dirname } = await import("path");
   const isSrc = /(\/||\\)src$/.test(dirname(__filename));
@@ -20,10 +19,14 @@ export default async (app: Express) => {
 
   /** Auth */
   const {
-    default: auth,
+    default: Auth,
     configure: configureAuth,
     requireRole
   } = await import("@local/auth");
+  const auth = Auth({
+    authSecret: process.env.USERS_SECRET || "",
+    dbUrl: resolve(process.cwd(), "users.db")
+  });
   app.use(cookieParser());
   app.use(
     "/api/auth",
