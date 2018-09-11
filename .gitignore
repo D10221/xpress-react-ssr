@@ -33,3 +33,4 @@ scriptcs_packages/
 **/static/**/*.gif
 *.hot-update.*
 *.map
+*.db

@@ -18,11 +18,16 @@ export default async (app: Express) => {
   }
 
   /** Auth */
+  
+  const { default: db } = await import("@local/db");
+  const { init } = await import("@local/users-sql");
+  await init(await db);
+
   const {
     default: auth,
     configure: configureAuth,
     requireRole
-  } = await import("@local/auth");  
+  } = await import("@local/auth");
   app.use(cookieParser());
   app.use(
     "/api/auth",

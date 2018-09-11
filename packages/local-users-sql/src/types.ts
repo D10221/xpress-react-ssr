@@ -8,7 +8,3 @@ export interface User {
   createdAt: Date;
   upgradedAt: Date;
 }
-export interface Crypto {
-  encrypt(text: string): string;
-  decrypt(text: string): string;
-}

@@ -1,24 +1,16 @@
-import sqlite, { Database } from "sqlite";
+import { Users } from "../src";
 
-const crypto = {
-    encrypt(text) {
-        return text;
-    },
-    decrypt(text) {
-        return text;
-    }
-};
-
-let db: Database;
+let users: Users;
 beforeAll(async () => {
-  db = await sqlite.open(":memory:", { verbose: true });
-});
+  const { default: init } = await import("../src/init");
+  await init;
+  users = (await import("../src")).default;
+  console.log(users);
+})
 
 describe("users", () => {
   it("works", async () => {
-    const { default: _users } = await import("../src");
-    const users = await _users(db, crypto);
-    const user = await users.byId("admin");
+    const user = await users.findById("admin");
     expect(user.id).toBe("admin");
     const r = await users.add({
       id: "bob",
@@ -27,24 +19,19 @@ describe("users", () => {
       email: "bob@localhost",
       roles: ["user"]
     });
-    expect((await users.byId("bob")).id).toBe("bob");
+    expect((await users.findById("bob")).id).toBe("bob");
   });
   it("updates", async () => {
-    const { default: _users } = await import("../src");
-    const users = await _users(db, crypto);
+
     await users.update({ id: "admin", displayName: "Admin1" });
-    expect((await users.byId("admin")).displayName).toBe("Admin1");
+    expect((await users.findById("admin")).displayName).toBe("Admin1");
   });
   /** */
   it("finds", async () => {
-    const { default: _users } = await import("../src");
-    const users = await _users(db, crypto);
-    expect(
-      (await users.find(
-        ({ id, roles, password }) =>
-          id === "admin" && roles.indexOf("admin") !== -1 && password === ""
-      ))[0].id
-    ).toBe("admin");
+    const found = await users.find(
+      ({ id, roles, password }) => id === "admin" && roles.indexOf("admin") !== -1 && password === ""
+    );
+    expect(found[0].id).toBe("admin");
     expect(
       (await users.find(({ id, password }) => {
         return id === "bob" && password === "bob";
@@ -54,8 +41,6 @@ describe("users", () => {
 
   /** */
   it("finds filtered", async () => {
-    const { default: _users } = await import("../src");
-    const users = await _users(db, crypto);
     expect(
       (await users.find(
         " id = 'admin'",
@@ -71,8 +56,6 @@ describe("users", () => {
   });
 
   it("finds Where", async () => {
-    const { default: _users } = await import("../src");
-    const users = await _users(db, crypto);
     expect((await users.find(`id = '${"admin"}'`))[0].id).toBe("admin");
     expect(
       (await users.find(({ id, password }) => {

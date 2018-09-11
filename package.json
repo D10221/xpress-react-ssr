@@ -18,6 +18,7 @@
     "packages/tiny-log",
     "packages/tiny-auth",
     "packages/tiny-auth-redux",
+    "packages/local-db",
     "packages/local-users",
     "packages/local-crypto",
     "packages/local-users-sql",
