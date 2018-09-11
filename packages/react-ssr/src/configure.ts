@@ -19,14 +19,10 @@ export default async (app: Express) => {
 
   /** Auth */
   const {
-    default: Auth,
+    default: auth,
     configure: configureAuth,
     requireRole
-  } = await import("@local/auth");
-  const auth = Auth({
-    authSecret: process.env.USERS_SECRET || "",
-    dbUrl: resolve(process.cwd(), "users.db")
-  });
+  } = await import("@local/auth");  
   app.use(cookieParser());
   app.use(
     "/api/auth",
