@@ -2,6 +2,21 @@ import { Users } from "../src";
 
 let users: Users;
 beforeAll(async () => {
+
+  jest.mock("@local/crypto", () => class {
+    encrypt(text: string) {
+      return text;
+    }
+    decrypt(text: string) {
+      return text;
+    }
+  });
+
+  jest.mock("@local/db", () => {
+    console.log("DB MOCK");
+    return require("sqlite").open(":memory:");
+  });
+
   const { default: init } = await import("../src/init");
   await init;
   users = (await import("../src")).default;
