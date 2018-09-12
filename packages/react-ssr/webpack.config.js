@@ -12,7 +12,7 @@ const config = require("./config/webpack.config")(__dirname);
  */
 const devServer = {
   port: process.env.PORT || args.port || 5001,
-  contentBase: config.output.path,
+  contentBase: config.output.path,  
   after: async app => {
     const { default: configure } = require("./src/configure");
     await configure(app);

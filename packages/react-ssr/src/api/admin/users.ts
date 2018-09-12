@@ -6,7 +6,6 @@ import {
 } from "@local/crud-controller";
 import { json } from "body-parser";
 import { Express, RequestHandler, Router, Application } from "express";
-import uuid from "uuid";
 import auth, { requireRole } from "@local/auth";
 import users from "@local/users";
 import Debug from "debug";
@@ -26,16 +25,7 @@ export default async function admin(_app?: Express | Router | Application) {
         requireRole(["admin"]),
         json(),
         ensureBody(),
-        ensureID(uuid),
-        ((req, _res, next) => {
-            // include user
-            try {
-                req.body.userid = req.user.id;
-                return next();
-            } catch (error) {
-                return next(error);
-            }
-        }) as RequestHandler,
+        ensureID(),       
         crud.put()
     ]);
     /** Update */
@@ -55,7 +45,6 @@ export default async function admin(_app?: Express | Router | Application) {
         json(),
         ensureBody(),
         ensureID(), // reject no id
-        requireRole(["admin", "delete"]),
         crud.dlete()
     ]);
     debug("configured");
