@@ -33,6 +33,8 @@ export default async (app: Express | Router | Application) => {
   /** apis */
   const { default: circuits } = await import("./api/circuits/api");
   app.use("/api/circuits", circuits());
+  const { admin } = await import("./api/users");
+  app.use("/api/admin/users", (await admin()));
 
   /** Routes, problem: 2 routers */
   const { default: routes } = await import("./routes");

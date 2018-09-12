@@ -4,16 +4,11 @@ export default function requireRole(roles: string[]): RequestHandler {
   if (!Array.isArray(roles))
     throw new Error("roles: string[] , required");
   /** */
-  return (req, res, next) => {
-    
-    if(!roles.length) return next();
-
+  return (req, _res, next) => {
+    if (!roles.length) return next();
     const { user } = req;
-    if (!user) return next(new Error("User required"));
-
-    if (!Array.isArray(user.roles))
-      return next(new Error(`Role: ${roles.join(",")} Required`));
-    for (const role of user.roles) {
+    const userRoles = (user && ((Array.isArray(user.roles) && user.roles) || (typeof user.roles === "string" && user.roles.split(",")))) || [];
+    for (const role of userRoles) {
       if (roles.indexOf(role) !== -1) {
         return next();
       }

@@ -21,10 +21,10 @@
     "packages/local-db",
     "packages/local-users",
     "packages/local-crypto",
-    "packages/local-users-sql",
     "packages/local-auth",
-    "packages/dev-middleware",    
-    "packages/react-ssr"    
+    "packages/dev-middleware",
+    "packages/local-crud-controller",
+    "packages/react-ssr"
   ],
   "dependencies": {
     "lerna": "2.11.0",

@@ -1,5 +1,5 @@
 {
-  "name": "@local/users-sql",
+  "name": "@local/crud-controller",
   "version": "0.0.1",
   "description": "",
   "main": "lib/index.js",

@@ -1,41 +1,23 @@
-export interface User {
-  username: string;
-  password: string;
-  displayName: string;
-  email: string;
-  roles: string[];
-}
-const users: User[] = [
-  {
-    username: "admin",
-    password: "admin",
-    displayName: "admin",
-    email: "admin@localhost",
-    roles: ["admin"]
-  },
-  {
-    username: "bob",
-    password: "bob",
-    displayName: "bob",
-    email: "bob@localhost",
-    roles: ["user"]
-  }
-];
+import find from "./find";
+import init from "./init";
+import add from "./add";
+import all from "./all";
+import findOne from "./find-one";
+import update from "./update";
+import remove from "./remove";
+export * from "./types";
 
-export function find(username: string): Promise<User | null | undefined> {
-  const { ...found } = users.find(u => u.username === username);
-  if (found) {
-    delete found.password;
-  }
-  return Promise.resolve(found);
-}
-export async function validate(
-  username: string,
-  password: string
-): Promise<User | null | undefined> {
-  return users.find(u => u.username === username && u.password === password);
-}
-export default {
+const users = {
+  add,
+  all,
+  remove,
   find,
-  validate
+  findOne,
+  findById: (id: string) => findOne(`id = '${id}'`),
+  update
 };
+
+export type Users = typeof users;
+
+/** */
+export default init.then(_ => users);
