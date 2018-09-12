@@ -1,4 +1,3 @@
-import "./env";
 import express from "express";
 import configure from "./configure";
 import start from "./start";

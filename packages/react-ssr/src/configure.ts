@@ -1,12 +1,13 @@
-import { Express, Router } from "express";
-import render from "./render";
-import PlainErrorHandler from "./plain-error-handler";
+import "./env";
 import { redirectOnAuthError } from "@local/tiny-auth";
 import cookieParser from "cookie-parser";
+import { Express, Router, Application } from "express";
+import PlainErrorHandler from "./plain-error-handler";
+import render from "./render";
 import Requirements from "./requirements";
 
 /** */
-export default async (app: Express) => {
+export default async (app: Express | Router | Application) => {
   /** use webpack-dev-server: if this is ./src */
   const { resolve, dirname } = await import("path");
   const isSrc = /(\/||\\)src$/.test(dirname(__filename));
@@ -18,11 +19,6 @@ export default async (app: Express) => {
   }
 
   /** Auth */
-  
-  const { default: db } = await import("@local/db");
-  const { init } = await import("@local/users-sql");
-  await init(await db);
-
   const {
     default: auth,
     configure: configureAuth,

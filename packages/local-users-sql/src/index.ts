@@ -5,7 +5,6 @@ import all from "./all";
 import findOne from "./find-one";
 import update from "./update";
 export * from "./types";
-export { init };
 
 const users = {
   add,
@@ -19,4 +18,4 @@ const users = {
 export type Users = typeof users;
 
 /** */
-export default users;
+export default init.then(_ => users);

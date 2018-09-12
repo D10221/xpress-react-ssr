@@ -1,6 +1,7 @@
 import { Users } from "../src";
 
 let users: Users;
+
 beforeAll(async () => {
 
   jest.mock("@local/crypto", () => class {
@@ -13,14 +14,10 @@ beforeAll(async () => {
   });
 
   jest.mock("@local/db", () => {
-    console.log("DB MOCK");
     return require("sqlite").open(":memory:");
   });
 
-  const { default: init } = await import("../src/init");
-  await init;
-  users = (await import("../src")).default;
-  console.log(users);
+  users = await import("../src").then( m => m.default);  
 })
 
 describe("users", () => {
@@ -36,11 +33,13 @@ describe("users", () => {
     });
     expect((await users.findById("bob")).id).toBe("bob");
   });
+
   it("updates", async () => {
 
     await users.update({ id: "admin", displayName: "Admin1" });
     expect((await users.findById("admin")).displayName).toBe("Admin1");
   });
+  
   /** */
   it("finds", async () => {
     const found = await users.find(
