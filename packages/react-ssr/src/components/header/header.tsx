@@ -1,18 +1,7 @@
 import React, { StatelessComponent } from "react";
 import { Link } from "react-router-dom";
 import { LogoutButton } from "../logout";
-import { css } from "styled-components";
-
-const styles = css`
-  .link {
-    margin: auto 1rem;
-  }
-  .nav-links {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    color: inherit;
-  }`;
+import styled from "styled-components";
 
 export interface HeaderProps {
   loggedIn: boolean;
@@ -24,42 +13,70 @@ function hasRole(user: { roles?: string[] } | null | undefined, role: string) {
 }
 
 const Header: StatelessComponent<HeaderProps> = ({ loggedIn, user }) => (
-  <>
-    <style>{styles}</style>
-    <header>
-      <nav>
-        <h1>Title</h1>
-        <div className="nav-links">
-          <Link className="link" to="/">
-            Home
-          </Link>
-          <Link className="link" to="/about">
-            About
-          </Link>
-          <Link className="link" to="/contact">
-            Contact
-          </Link>
-          {loggedIn &&
-            hasRole(user, "admin") && (
-              <Link className="link" to="/admin">
-                Admin
-              </Link>
-            )}
-          {loggedIn && (
-            <Link className="link" to="/profile">
-              Profile
-            </Link>
+  <Head>
+    <Nav>
+      <H1>Title</H1>
+      <NavLinks>
+        <ALink to="/">
+          Home
+      </ALink>
+        <ALink to="/about">
+          About
+      </ALink>
+        <ALink to="/contact">
+          Contact
+      </ALink>
+        {loggedIn &&
+          hasRole(user, "admin") && (
+            <ALink to="/admin">
+              Admin
+          </ALink>
           )}
-          {!loggedIn && (
-            <Link className="link" to="/login">
-              Login
-            </Link>
-          )}
-          {loggedIn && <LogoutButton />}
-        </div>
-      </nav>
-    </header>
-  </>
+        {loggedIn && (
+          <ALink to="/profile">
+            Profile
+        </ALink>
+        )}
+        {!loggedIn && (
+          <ALink to="/login">
+            Login
+        </ALink>
+        )}
+        {loggedIn && <LogoutButton />}
+      </NavLinks>
+    </Nav>
+  </Head>
 );
 
 export default Header;
+
+const Head = styled.header`
+  justify-content: space-between;
+`;
+
+const Nav = styled.nav`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: cornflowerblue;
+    color: aliceblue;
+`;
+
+const H1 = styled.h1`
+    margin: 0;
+    padding: 0.5rem;
+    color: inherit;
+`;
+
+const ALink = styled((props: any) => <Link className={props.className} {...props} />)`
+  text-decoration: none;
+  color: inherit;  
+  margin: 1rem;
+`;
+
+const NavLinks = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: inherit;
+`;

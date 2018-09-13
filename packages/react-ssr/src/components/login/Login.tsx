@@ -1,6 +1,21 @@
 import * as React from "react";
-import styles from "./styles";
-
+import {
+  Actions,
+  BusyBox,
+  BusyText,
+  Button,
+  Content,
+  ErrorBox,
+  ErrorText,
+  Form,
+  Header,
+  Input,
+  Label,
+  Root,
+  Row,
+  Title
+} from "./styled";
+/** */
 interface State {
   username: string;
   password: string;
@@ -9,8 +24,8 @@ interface State {
   success: boolean;
   referer: string | null | undefined;
 }
-
-export default class App extends React.Component<{}, State> {
+/** */
+export default class Login extends React.Component<{}, State> {
   state: State = {
     username: "",
     password: "",
@@ -19,12 +34,14 @@ export default class App extends React.Component<{}, State> {
     success: false,
     referer: undefined
   };
+
   componentDidMount() {
     const searchParams: URLSearchParams = new URLSearchParams(
       window.location.search
     );
     this.setState({ referer: searchParams.get("ref") });
   }
+
   setUsername = (username: string) => {
     this.setState({
       username
@@ -65,15 +82,17 @@ export default class App extends React.Component<{}, State> {
         let message = "error";
         try {
           message = await r.text();
-        } catch {}
+        } catch { }
         this.setState({ error: message });
         return;
       }
       await r.json();
       this.setState({ success: true });
+
       const a: HTMLAnchorElement = document.createElement("a");
       a.href = this.state.referer || "/";
       a.click();
+
     } catch (error) {
       this.setState({ error: error.message, success: false });
     } finally {
@@ -88,65 +107,59 @@ export default class App extends React.Component<{}, State> {
   public render() {
     const { username, password } = this.state;
     return (
-      <>
-        <style children={styles} />
-        <div className="app">
-          <header className="app-header">
-            <h1 className="app-title">Login</h1>
-          </header>
-          <div className="app-content">
-            <form className="app-form">
-              <div className="app-form-row">
-                <label className="app-form-input-label">Username: </label>
-                <input
-                  autoComplete="username"
-                  autoFocus={true}
-                  disabled={this.state.busy || this.state.success}
-                  className="app-form-input"
-                  value={username}
-                  onChange={this.handleTextChanged(this.setUsername)}
-                />
-              </div>
-              <div className="app-form-row">
-                <label className="app-form-input-label">Password: </label>
-                <input
-                  type={"password"}
-                  autoComplete="current-password"
-                  onKeyUp={this.onKeyUp("Enter", this.login)}
-                  disabled={this.state.busy || this.state.success}
-                  className="app-form-input"
-                  value={password}
-                  onChange={this.handleTextChanged(this.setPassword)}
-                />
-              </div>
-            </form>
-            <div className="app-form-actions">
-              <button
+      <Root>
+        <Header>
+          <Title>Login</Title>
+        </Header>
+        <Content>
+          <Form>
+            <Row center>
+              <Label>Username: </Label>
+              <Input
+                autoComplete="username"
+                autoFocus={true}
                 disabled={this.state.busy || this.state.success}
-                className="app-form-action-button"
-                onClick={this.login}
-              >
-                Login
-              </button>
+                value={username}
+                onChange={this.handleTextChanged(this.setUsername)}
+              />
+            </Row>
+            <Row >
+              <Label>Password: </Label>
+              <Input
+                type={"password"}
+                autoComplete="current-password"
+                onKeyUp={this.onKeyUp("Enter", this.login)}
+                disabled={this.state.busy || this.state.success}
+                value={password}
+                onChange={this.handleTextChanged(this.setPassword)}
+              />
+            </Row>
+          </Form>
+          <Actions>
+            <Button
+              disabled={this.state.busy || this.state.success}
+              onClick={this.login}
+            >
+              Login
+              </Button>
+          </Actions>
+          {this.state.success && (
+            <div>
+              <span>SUCCESS</span>
             </div>
-            {this.state.success && (
-              <div>
-                <span>SUCCESS</span>
-              </div>
-            )}
-            {this.state.busy && (
-              <div className="busy">
-                <span className="busy-text">...please wait</span>
-              </div>
-            )}
-            {this.state.error && (
-              <div className="error">
-                <span className="error-text">{this.state.error}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      </>
+          )}
+          {this.state.busy && (
+            <BusyBox>
+              <BusyText>...please wait</BusyText>
+            </BusyBox>
+          )}
+          {this.state.error && (
+            <ErrorBox>
+              <ErrorText>{this.state.error}</ErrorText>
+            </ErrorBox>
+          )}
+        </Content>
+      </Root>
     );
   }
 }
