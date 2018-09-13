@@ -1,7 +1,6 @@
 import React, { StatelessComponent } from "react";
-import { Link } from "react-router-dom";
 import { LogoutButton } from "../logout";
-import styled from "styled-components";
+import { Head, H1, NavLinks, ALink, Nav } from "./styled";
 
 export interface HeaderProps {
   loggedIn: boolean;
@@ -49,34 +48,3 @@ const Header: StatelessComponent<HeaderProps> = ({ loggedIn, user }) => (
 );
 
 export default Header;
-
-const Head = styled.header`
-  justify-content: space-between;
-`;
-
-const Nav = styled.nav`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: cornflowerblue;
-    color: aliceblue;
-`;
-
-const H1 = styled.h1`
-    margin: 0;
-    padding: 0.5rem;
-    color: inherit;
-`;
-
-const ALink = styled((props: any) => <Link className={props.className} {...props} />)`
-  text-decoration: none;
-  color: inherit;  
-  margin: 1rem;
-`;
-
-const NavLinks = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    color: inherit;
-`;

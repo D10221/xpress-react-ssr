@@ -6,6 +6,8 @@ import { BrowserRouter, StaticRouter } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 import routes from "../routes";
 import { Connected as Header } from "./header";
+import { ThemeProvider } from "styled-components";
+import theme from "./theme";
 
 const isWindow = typeof window !== "undefined";
 
@@ -24,13 +26,15 @@ const App: ComponentType<{
   return (
     <Provider store={store}>
       <Router {...{ context, location, basename }}>
-        <Layout Header={<Header />}>
-          <Switch>
-            {routes.map(route => (
-              <Route key={route.path} {...route} />
-            ))}
-          </Switch>
-        </Layout>
+        <ThemeProvider theme={theme}>
+          <Layout Header={<Header />}>
+            <Switch>
+              {routes.map(route => (
+                <Route key={route.path} {...route} />
+              ))}
+            </Switch>
+          </Layout>
+        </ThemeProvider>
       </Router>
     </Provider>
   );
