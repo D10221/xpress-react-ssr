@@ -31,7 +31,9 @@ describe("users", () => {
       email: "bob@localhost",
       roles: ["user"]
     });
-    expect((await users.findById("bob")).id).toBe("bob");
+    const found = await users.findById("bob");
+    expect(found.id).toBe("bob");
+    expect(found.roles).toBe("user");
   });
 
   it("updates", async () => {

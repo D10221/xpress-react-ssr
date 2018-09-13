@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cd packages/xpresso && npm start",
-    "build": "lerna --no-sort run build",
+    "build": "./scripts/build",
     "clean-modules": "rimraf **/node_modules/* && rm yarn.lock && yarn",
     "test": "lerna --no-sort run test",
     "set-version": "./scripts/set-version.js"
