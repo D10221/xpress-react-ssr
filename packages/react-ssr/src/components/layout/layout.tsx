@@ -1,30 +1,28 @@
 import React, { ReactNode } from "react";
 import styles from "./styles";
+import WithStyles from "../with-styles";
 
 export interface LayoutProps {
-  Header: ReactNode
+  Header: ReactNode;
 }
 
 export default class Layout extends React.Component<LayoutProps> {
   render() {
     return (
-      <>
-        <style children={styles} />
+      <WithStyles styles={styles}>
         <div className="layout-root">
           {this.props.Header}
-          <div className="layout-content">
-            {this.props.children}
-          </div>
+          <div className="layout-content">{this.props.children}</div>
           <footer>
             <div> App footer</div>
             <nav>
-              <a >LINK #1</a>
-              <a >LINK #2</a>
-              <a >LINK #3</a>
+              <a>LINK #1</a>
+              <a>LINK #2</a>
+              <a>LINK #3</a>
             </nav>
           </footer>
         </div>
-      </>
+      </WithStyles>
     );
   }
 }
